@@ -1,0 +1,379 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="viewport" content="width=device-width"/>
+<title>Laravel</title>
+<!-- STYLES & JQUERY 
+================================================== -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/icons.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/slider.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/skinblue.css"/><!-- change skin color -->
+<link rel="stylesheet" type="text/css" href="../../css/responsive.css"/>
+<link rel="stylesheet" href="../../css/prism.css" >
+<script src="../../js/jquery-1.9.0.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</head>
+<body>
+<!-- TOP LOGO & MENU
+================================================== -->
+<div class="grid">
+	<div class="row space-bot">
+		<!--Logo-->
+		<div class="c4">
+			<a href="../../index.html">
+			<img src="../../images/logo.png" class="logo" alt="">
+			</a>
+		</div>
+		<!--Menu-->
+		<div class="c8">
+      <nav id="topNav">
+      <ul id="responsivemenu">
+        <li class="last"><a href="../../index.html">Home</a></li>
+        <li><a href="#">Tutorials</a>
+        <ul style="display: none;">
+          <li><a href="../../laravel.html">Laravel</a></li>
+          <li><a href="../../mean-stack.html">MEAN Stack</a></li>         
+          <li><a href="../../ionic.html">Ionic Framework</a></li>
+        </ul>
+        </li>    
+      </ul>
+      </nav>
+  </div>
+	</div>
+</div>
+<div class="undermenuarea">
+</div>
+<!-- START content area
+================================================== -->
+<!-- HEADER
+================================================== -->
+<div class="undermenuarea">
+  <div class="boxedshadow">
+  </div>
+  <div class="grid">
+    <div class="row">
+      <div class="c8">
+        <h1 class="titlehead">LARAVEL</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CONTENT
+================================================== -->
+<div class="grid">
+    <div class="shadowundertop">
+    </div>
+    <div class="row">   
+      
+      <!-- MAIN CONTENT -->
+      <div class="c9">
+        <h1 class="maintitle space-top">
+        <span>Favorite Quotes App: Views</span>
+        </h1>
+        <div style="font-size: 18px;">
+          <p>
+            <b style="font-size: 20px; color: #0E8FAB">Objectives:</b> We'll build an app to keep track of list of our favorite quotes. It's going to be very basic. However, We'll learn the following
+            <ul style="list-style-type: disc">
+              <li>Installing laravel</li>
+              <li>How laravel MVC works</li>
+              <li>Performing CRUD (Create, Read, Update, Delete) operations with MySQL backend</li>
+            </ul>
+          </p>
+          <p>
+            <span style="font-size: 26px; color: #0E8FAB">Installing Laravel</span><br>
+            We'll start by installing laravel and creating our project. There are couple of options available but I think the easiest option in windows is to 
+            <ul style="list-style-type: disc;">
+              <li>Download and install Xampp. Head over to <a href="https://www.apachefriends.org">Apache Friends</a> and download the latest version</li>
+              <li>Download and install composer. Composer is a dependency manager for PHP. visit <a href="https//getcomposer.org">download page</a></li>
+              <li>Open a command terminal. Change directory to the htdocs of xampp and run the command to create a new laravel project <br><script type="text/plain" class="language-markup;">composer create-project --prefer-dist laravel/laravel quotes-app</script><br>
+              </li>
+              <li>Launch Notepad as an administrator. Edit <b>http-vhosts.conf </b> file found in C:/xampp/apache/conf/extra. Add <br>
+              <script type="text/plain" class="language-markup"><VirtualHost *:80>
+  DocumentRoot "C:/xampp/htdocs/quotes-app/public"
+  ServerName quotes.dev
+</VirtualHost></script><br></li>
+              <li>Still using notepad, Edit <b>host </b> file found in <b>C:\Windows\System32\drivers\etc.</b> Add <br><script type="text/plain" class="language-markup">127.0.0.1       quotes.dev</script><br></li>
+              <li>Run Xampp and start the apache and mysql modules. Open a browser and enter <b>quotes.dev </b> You should see the welcome page below (or something similiar) <br><br>
+              <img src="../../images/laravel-one/welcome.png" alt="welcome page"></li>
+            </ul>
+          </p>
+          <p></p>
+          <p>If you encountered errors. Remember we have a savior in <b>Google</b>. Search for the solution! <br>After creating project successfully, open project in your favorite code editor (Maybe Sublime Text, VS Code, Atom or others ). <br><br></p>
+          <p><span style="font-size: 26px; color: #0E8FAB">Laravel Folder Structure</span><br>
+          Laravel follows a MVC structure. The view, model and controllers are separated. <br>
+          <p>We are not going to discuss all the functions of the folders and files for now, that can be very boring. However, the <b>app/Http/Controllers</b> folder is where we define the controllers. <br><br> We can place our images, styles and scripts in the <b>public</b> folder. The <b>resources/views</b> folder contains our views. <br><br>The <b>web.php</b> file in the <b>routes</b> folder is where we defined the routes.</p><br>
+          </p>
+          <p>
+            <span style="font-size: 26px; color: #0E8FAB">Laravel Homepage</span><br>
+            What page is displayed when we visit our site? Take a lot at the <b>web.php</b> file <br>
+            <pre class="line-numbers">
+                <code class="language-php">
+                    <script type="prism-html-markup">
+                Route::get('/', function () {
+                  return view('welcome');
+                });
+                    </script>
+                </code>
+            </pre><br>
+            Here we see a single route defined. This route returns the <b>welcome</b> view when a request is made to the homepage. The <b>welcome</b> view is found in the <b>reources/views</b> directory<br>
+            <b>Try This: </b> Edit the <b>welcome.blade.php</b>, save it and reload the page.
+          </p>
+          <p>
+            <span style="font-size: 26px; color: #0E8FAB">Creating our first view</span><br>
+            Imagine that we are building a site with so many pages, we can use a controller to manage the pages. So, before we add a page, let us add a controller first. <br><br>
+            We can generate a controller using a command line.  We'll use the artisan command. Artisan is Laravel command line tool that helps us to perform tasks that we hate to do manually. Using Artisan, we can create models, views, controllers, migrations and many other things. <br><br>
+            Run Command below to create a controller
+            <pre class="line-numbers">
+              <code class="language-php">
+                <script type="prism-html-markup">
+                  php artisan make:controller PagesController
+                </script>
+              </code>
+            </pre><br>
+            Where is the controller we just created? Don't panic. Go to <b>app/Http/Controllers</b>. There you will see your controller. <br><br>
+            <b>PagesController.php</b>
+            <pre class="line-numbers">
+              <code class="language-php">
+                <script type="prism-html-php">
+                    <?php
+                    namespace App\Http\Controllers;
+
+                    use Illuminate\Http\Request;
+
+                    class PagesController extends Controller
+                    {
+                        //
+                    }
+                </script>
+              </code>
+            </pre><br>
+            As you can see, controllers are plain php classes that extends the Controller Class. Add a function that will return the home view.<br>
+            <pre class="line-numbers">
+              <code class="language-php">
+                <script type="prism-html-markup">
+                  <?php
+
+                    namespace App\Http\Controllers;
+
+                    use Illuminate\Http\Request;
+
+                    class PagesController extends Controller
+                    {
+                        public function home()
+                        {
+                            return view('welcome');
+                        }
+                    }
+                </script>
+              </code>
+            </pre><br>
+            Modify the route in <b>web.php</b> file to use the controller<br>
+            <pre class="line-numbers">
+              <code class="language-php">
+                <script type="prism-html-markup">
+                  Route::get('/', [
+                      'uses' => 'PagesController@home'
+                  ]);
+                </script>
+              </code>
+            </pre><br>
+            Save and reload the page. You've just displayed the front page using the controller!
+          </p>
+          <p>
+            <span style="font-size: 26px; color: #0E8FAB">Adding our own Pages</span><br>
+            Adding pages is quite easy! Create a file in the <b>resources/views</b> directory named <b>about.blade.php</b>. Add the basic HTML markup below <br><br>
+            <b>about.blade.php</b> <br>
+            <pre class="line-numbers">
+              <code class="language-php">
+                <script type="prism-html-markup">
+                  <html>
+                      <head>
+                          <title>About Page</title>
+                      </head>
+                      <body>
+                          <div>
+                              <div class="content">
+                                  <div>About Page</div>
+                              </div>
+                          </div>
+                      </body>
+                  </html>
+                </script>
+              </code>
+            </pre><br>
+            Next, add a function to return the <b>about</b> view in the <b>PagesController.php</b> <br>
+            <pre class="line-numbers">
+              <code class="language-php">
+                <script type="prism-html-markup">
+                  <?php
+
+                    namespace App\Http\Controllers;
+
+                    use Illuminate\Http\Request;
+
+                    class PagesController extends Controller
+                    {
+                        public function home(){
+                            return view('welcome');
+                        }
+
+                        public function about(){
+                            return view('about');
+                        }
+                    }
+                </script>
+              </code>
+            </pre><br>
+            Add the route to the <b>web.php</b> <br>
+            <pre>
+              <code class="language-php">
+                <script type="prism-html-markup">
+                  Route::get('/about', [
+                    'uses' => 'PagesController@about'
+                  ]);
+                </script>
+              </code>
+            </pre><br>
+            Try hitting the url <b>quotes.dev/about</b> in the browser. you should see the about page displayed <br><br>
+            <img src="../../images/laravel-one/about.png" alt="about page">
+            <br><br>
+            That's it for views for now. Let us discuss <b>Layouts</b>
+          </p>
+          <div style="text-align: right">
+            <a href="layouts.html">layouts >> </a>
+          </div>
+        </div>
+        <div>
+          
+        </div>
+      </div><!-- end main content -->
+      
+      <!-- SIDEBAR -->  
+      <div class="c3">
+        <div class="rightsidebar">
+  <h2 class="title stresstitle">Subsections</h2><br>
+  <a href="views.html">Views</a><br>
+  <a href="layouts.html">Layouts</a><br>
+  <a href="models.html">Models</a><br>
+  <a href="controllers.html">Controllers</a><br>
+  <a href="sessions.html">Sessions</a><br>
+  </div> 
+      </div><!-- end sidebar -->      
+    </div>
+</div><!-- end grid -->
+
+<!-- FOOTER
+================================================== -->
+<div id="wrapfooter">
+  <div class="grid">
+    <div class="row" id="footer">
+      <!-- to top button  -->
+      <p class="back-top floatright">
+        <a href="#top"><span></span></a>
+      </p>
+      <!-- 1st column -->
+      <div class="c3">
+        <img src="images/logo.png" style="padding-top: 70px;" alt="">
+      </div>
+      <!-- 2nd column -->
+      <div class="c3">
+        <h2 class="title">Author</h2>
+        <hr class="footerstress">
+        Have you read about these frameworks and find it difficult to put all the functions together and build a project? If yes, our tutorials will help you achieve that. <br>
+        -- Mr. Kingslife
+      </div>
+      <!-- 3rd column -->
+      <div class="c3">
+        <h2 class="title"><i class="icon-envelope-alt"></i> Contact</h2>
+        <hr class="footerstress">
+        <dl>
+          <dd><span>Telephone:</span>+234 803 425 5960</dd>
+          <dd>E-mail: <a href="more.html">contact@codeject.site</a></dd>
+        </dl>
+        <ul class="social-links" style="margin-top:15px;">
+          <li class="facebook-link smallrightmargin">
+          <a href="https://fb.me/codeject" class="facebook has-tip" target="_blank" title="Join us on Facebook">Facebook</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- copyright area -->
+<div class="copyright">
+  <div class="grid">
+    <div class="row">
+      <div class="c6">
+         CodeJect &copy; 2018. All Rights Reserved.
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END CONTENT AREA -->
+<!-- JAVASCRIPTS
+================================================== -->
+<!-- all -->
+<script src="../../js/modernizr-latest.js"></script>
+
+<!-- menu & scroll to top -->
+<script src="../../js/common.js"></script>
+
+<!-- slider -->
+<script src="../../js/jquery.cslider.js"></script>
+
+<!-- cycle -->
+<script src="../../js/jquery.cycle.js"></script>
+
+<!-- carousel items -->
+<script src="../../js/jquery.carouFredSel-6.0.3-packed.js"></script>
+
+<!-- twitter -->
+<script src="../../js/jquery.tweet.js"></script>
+
+<!-- Call Showcase - change 4 from min:4 and max:4 to the number of items you want visible -->
+<script type="text/javascript">
+$(window).load(function(){			
+			$('#recent-projects').carouFredSel({
+				responsive: true,
+				width: '100%',
+				auto: true,
+				circular	: true,
+				infinite	: false,
+				prev : {
+					button		: "#car_prev",
+					key			: "left",
+						},
+				next : {
+					button		: "#car_next",
+					key			: "right",
+							},
+				swipe: {
+					onMouse: true,
+					onTouch: true
+					},
+				scroll : 2000,
+				items: {
+					visible: {
+						min: 4,
+						max: 4
+					}
+				}
+			});
+		});	
+</script>
+
+<!-- Call opacity on hover images from carousel-->
+<script type="text/javascript">
+$(document).ready(function(){
+    $("img.imgOpa").hover(function() {
+      $(this).stop().animate({opacity: "0.6"}, 'slow');
+    },
+    function() {
+      $(this).stop().animate({opacity: "1.0"}, 'slow');
+    });
+  });
+</script>
+</body>
+</html>

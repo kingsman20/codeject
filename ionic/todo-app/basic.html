@@ -1,0 +1,550 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="viewport" content="width=device-width"/>
+<title>CodeJect</title>
+<!-- STYLES & JQUERY 
+================================================== -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/icons.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/slider.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/skinblue.css"/><!-- change skin color -->
+<link rel="stylesheet" type="text/css" href="../../css/responsive.css"/>
+<link rel="stylesheet" href="../../css/prism.css" >
+<script src="../../js/jquery-1.9.0.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</head>
+<body>
+<!-- TOP LOGO & MENU
+================================================== -->
+<div class="grid">
+	<div class="row space-bot">
+		<!--Logo-->
+		<div class="c4">
+			<a href="../../index.html">
+			<img src="../../images/logo.png" class="logo" alt="">
+			</a>
+		</div>
+		<!--Menu-->
+		<div class="c8">
+      <nav id="topNav">
+      <ul id="responsivemenu">
+        <li class="last"><a href="../../index.html">Home</a></li>
+        <li><a href="#">Tutorials</a>
+        <ul style="display: none;">
+          <li><a href="../../laravel.html">Laravel</a></li>
+          <li><a href="../../mean-stack.html">MEAN Stack</a></li>         
+          <li><a href="../../ionic.html">Ionic Framework</a></li>
+        </ul>
+        </li>    
+      </ul>
+      </nav>
+  </div>
+	</div>
+</div>
+<div class="undermenuarea">
+</div>
+<!-- START content area
+================================================== -->
+<!-- HEADER
+================================================== -->
+<div class="undermenuarea">
+  <div class="boxedshadow">
+  </div>
+  <div class="grid">
+    <div class="row">
+      <div class="c8">
+        <h1 class="titlehead">Ionic Framework</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CONTENT
+================================================== -->
+<div class="grid">
+    <div class="shadowundertop">
+    </div>
+    <div class="row">   
+      
+      <!-- MAIN CONTENT -->
+      <div class="c9">
+        <h1 class="maintitle space-top">
+        <span>Todo App: Ionic Basic</span>
+        </h1>
+        <div style="font-size: 18px;">
+          <p>
+            <b style="font-size: 20px; color: #0E8FAB">Objectives:</b> We'll build a Todo Mobile App
+            <ul style="list-style-type: disc">
+              <li>Installing the Ionic Framework</li>
+              <li>Angular Basic</li>
+              <li>Ionic UI Components and Pages</li>
+              <li>Performing CRUD (Create, Read, Update, Delete) operations on an Array Object</li>
+            </ul>
+          </p>
+          <p>
+            <b style="font-size: 20px; color: #0E8FAB">Installing Ionic</b><br>
+            Installing ionic is quite easy. First, we need to install <b>nodejs</b>. You can find download link <a href="https://nodejs.org">here</a> or you can verify that you have it by typing <b>node -v</b> in the command line. It will be used to manage dependencies from npm. <br><br>
+            Next run the command below which installs the latest version of ionic framework. <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              npm install -g cordova ionic
+            </script><br>
+            The command above will install ionic globally on our machine. We can now create a new ionic project using the CLI. Using the command line, change directory to where you want to create the project and run <br><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              ionic start todo-app blank
+            </script><br>
+            This will create a new app with the blank template. serve the app so that we can see it in a browser. 
+            <script type="text/plain" class="language-javascript; line-numbers">
+              cd todo-app
+              ionic serve
+            </script><br>
+            This compiles the app and spins up a development server. The app should automatically open up in a browser. If not, enter the url in the browser. To simulate a mobile view in the browser, open up a developer view. In chrome, right-click and select inspect. <br><br>
+            <img src="../../images/ionic-one/blank.png"> <br><br>
+            <p>
+            <span style="font-size: 26px; color: #0E8FAB">Ionic Folder Structure </span><br>
+            Ionic have many folders and files. We'll not discuss all the folders and files now since that can be very boring. However, notice the <b>src</b> folder. That's is where we'll work more often with. It contains subfolder for our pages, program logic, theming and much more. <br><br>
+            The <b>node_modules</b> contains our dependencies. We'll not work directly with this folder since it will be managed by npm. Notice our <b>package.json</b> folder which keeps track of dependencies used. <br><br>
+            If you are familar with basic angular coding then ionic will be quite easy.
+            </p>
+            <p>
+            <span style="font-size: 26px; color: #0E8FAB">Creating Pages</span><br>
+            Pages can be generated using the cli. How many pages will be needed for our Todo App? We'll need pages for adding Todo items, updating Todo items and our existing <b>home</b> page will display the list of Todos. We'll also add an about page for working with tabs. <br><br>
+            So, let us create the pages
+            <script type="text/plain" class="language-javascript; line-numbers">
+              ionic generate page addTodo
+            </script><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              ionic generate page updateTodo
+            </script><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              ionic generate page about
+            </script><br>
+            Next is to add the pages to our <b>app.module.ts</b>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { AboutPage } from './../pages/about/about';
+import { UpdateTodoPage } from './../pages/update-todo/update-todo';
+import { AddTodoPage } from './../pages/add-todo/add-todo';
+import { BrowserModule } from '@angular/platform-browser';
+import { ErrorHandler, NgModule } from '@angular/core';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+
+import { MyApp } from './app.component';
+import { HomePage } from '../pages/home/home';
+
+@NgModule({
+  declarations: [
+    MyApp,
+    HomePage,
+    AddTodoPage,
+    UpdateTodoPage,
+    AboutPage
+  ],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(MyApp)
+  ],
+  bootstrap: [IonicApp],
+  entryComponents: [
+    MyApp,
+    HomePage,
+    AddTodoPage,
+    UpdateTodoPage,
+    AboutPage
+  ],
+  providers: [
+    StatusBar,
+    SplashScreen,
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
+  ]
+})
+export class AppModule {}
+
+
+            </script><br>      
+            </p>
+            <p>
+            <span style="font-size: 26px; color: #0E8FAB">Add Tabs</span><br>
+            Let's use this example to illustrate how we can add tabs in a page. We'll manually create a component to hold the tabs. Create a folder in the <b>src/pages</b> directory named tabs. Inside the folder, create a file <b>tabs.ts</b> and add the content.
+            <br><br>
+            <b>tabs.ts</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { AboutPage } from './../about/about';
+import { HomePage } from './../home/home';
+import { Component } from '@angular/core';
+
+@Component({
+    selector: 'page-tabs',
+    template: `
+        <ion-tabs>
+            <ion-tab [root]="homePage" tabTitle="Home" tabIcon="home"></ion-tab>
+            <ion-tab [root]="aboutPage" tabTitle="About" tabIcon="book"></ion-tab>
+        </ion-tabs>
+    `
+})
+export class TabsPage {
+    homePage = HomePage;
+    aboutPage = AboutPage;
+
+}
+            </script><br>
+            Notice that we have created two tabs which will set the root to either the home page or about page. To use it, change the root page that is currently set to homepage in the <b>app.component.ts</b> to use the tabspage. <br><br>
+            <b>app.component.ts</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { TabsPage } from './../pages/tabs/tabs';
+import { Component } from '@angular/core';
+import { Platform } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+
+@Component({
+  templateUrl: 'app.html'
+})
+export class MyApp {
+  rootPage:any = TabsPage;
+
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
+    platform.ready().then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
+      statusBar.styleDefault();
+      splashScreen.hide();
+    });
+  }
+}
+
+
+            </script><br>
+            Also, do not forget to add the tabspage to the <b>app.module.ts</b> just like we added the other pages. After recompiling, you should see the tabs the welcome page with the tabs. <br><br>
+            <img src="../../images/ionic-one/tabs.png">
+            That was quite easy to implement. Notce the tabs below and of course, you can add as many tabs as you want. Also, the page that is loaded first is that of the first tab, that is the homepage in this case. <br><br>
+            To see the app in action, we'll add a dummy data to see to <b>home.ts</b> <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular';
+
+@Component({
+  selector: 'page-home',
+  templateUrl: 'home.html'
+})
+export class HomePage {
+
+  constructor(public navCtrl: NavController) {
+
+  }
+
+  public items;
+
+  ionViewDidLoad(){
+ 
+    this.items = [
+      {title: 'Wash plates'},
+      {title: 'Sweep the room'},
+      {title: 'Eat some sausage'}
+    ];
+ 
+  }
+ 
+  addItem(){
+ 
+  }
+ 
+}
+
+            </script><br>
+            Notice that we have an array of three items which will initialize once the page loads as we can see from the life-cycle hook. <br><br>
+            Modify the <b>home.html</b> so we can see the changes <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              <ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      Todos!
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="addItem()"><ion-icon name="add-circle"></ion-icon></button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+ 
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let item of items">{{item.title}}</ion-item>
+  </ion-list>
+</ion-content>
+            </script><br>
+            This is what we should have so far. <br><br>
+            <img src="../../images/ionic-one/dummy.png">
+      
+            </p>
+            <p>
+            <span style="font-size: 26px; color: #0E8FAB">Navigation in Ionic</span><br>
+            Navigation in ionic work using stack. We push and pop pages. Now, let us work on adding a new Todo. <br><br>
+            Modify the <b>add-todo.html</b> to reflect the changes below <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              <ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      Add Item
+    </ion-title>
+      <ion-buttons end>
+        <button ion-button icon-only (click)="close()"><ion-icon name="close"></ion-icon></button>
+      </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+ 
+<ion-content>
+  <ion-list>
+ 
+    <ion-item>
+      <ion-label floating>Title</ion-label>
+      <ion-input type="text" [(ngModel)]="title"></ion-input>
+    </ion-item>
+ 
+  </ion-list>
+ 
+  <button full ion-button color="primary" (click)="saveItem()">Save</button>
+ 
+</ion-content>
+            </script><br>
+            Obviously, we have two functions to define in the class. notice we also bind a property to a value (title) which will defined in the class. <br><br>
+            <b>add-todo.ts</b>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { Component } from '@angular/core';
+import { IonicPage, ViewController, NavController } from 'ionic-angular';
+
+@IonicPage()
+@Component({
+  selector: 'page-add-todo',
+  templateUrl: 'add-todo.html',
+})
+export class AddTodoPage {
+  title: string;
+
+  constructor(public navCtrl: NavController, public view: ViewController) {
+  }
+  
+  saveItem(){
+ 
+    let newItem = {
+      title: this.title
+    };
+ 
+    this.view.dismiss(newItem);
+ 
+  }
+ 
+  close(){
+    this.view.dismiss();
+  }
+
+}
+
+            </script><br>
+            We injected the ViewController which let us dismiss the view (modal). we are also passing back the data to the view that triggered this modal. In this case, the homepage. <br><br>
+            Modify the <b>home.ts</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { AddTodoPage } from './../add-todo/add-todo';
+import { Component } from '@angular/core';
+import { NavController, ModalController } from 'ionic-angular';
+
+@Component( {
+  selector: 'page-home',
+  templateUrl: 'home.html'
+} )
+export class HomePage {
+  public items = [];
+
+  constructor( public navCtrl: NavController, public modalCtrl: ModalController ) {
+
+  }
+
+  addItem() {
+
+    let addModal = this.modalCtrl.create( AddTodoPage );
+    addModal.onDidDismiss(( item ) => {
+      if ( item ) {
+        this.items.push(item);
+      }
+
+    } );
+
+    addModal.present();
+  }
+
+}
+
+            </script><br>
+            From the homepage, we set the <b>add-todo</b> to appear as an modal (overlay). When the page is dismissed, we want to get the data passed from it and push it to our array. <br> Save and let it recompile, you should be able to add Todo and see it in the home page <br><br>
+            <p>
+            <span style="font-size: 26px; color: #0E8FAB">Swipe Gesture</span><br>
+            We'll implement a swipe functionality which is common in mobile apps. You can read more about it in the <a href="https://ionicframework.com/docs/api/components/item/ItemSliding/">official docs</a>.<br><br>
+            modify the <b>home.html</b> to reflect the changes below <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              <ion-header>
+  <ion-navbar color="primary">
+    <ion-title>
+      Todos!
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="addItem()"><ion-icon name="add-circle"></ion-icon></button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item-sliding *ngFor="let item of items">
+      <ion-item>
+        {{item.title}}
+      </ion-item>
+      <ion-item-options>
+        <button ion-button color="danger" (click)="delete(item)">Delete</button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
+            </script><br>
+            The ion-item-sliding is used to implement the slider as seen above. We can have one or more buttons with a click listener in the ion-item-options. Add the delete function to the class <br><br>
+            <b>home.ts</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              delete(item: string){
+    this.items.splice(this.items.indexOf(item), 1);
+  }
+            </script><br>
+            We get the index position of the item in the array and used the splice method to remove it. After recompiling, you should be able to add item to the list, swipe it and click on the button to delete it. <br>
+      
+            </p>
+            </p>
+          </p>
+          <div style="text-align: right">
+            <a href="deploy.html">Deploy >> </a>
+          </div>
+        </div>
+      </div>
+      <!-- end main content -->
+      
+      <!-- SIDEBAR -->  
+      <div class="c3">
+        <div class="rightsidebar">
+  <h2 class="title stresstitle">Subsections</h2><br>
+  <a href="basic.html">Installation</a><br>
+  <a href="deploy.html">Deploying App</a><br>
+  </div> 
+      </div><!-- end sidebar -->      
+    </div>
+</div><!-- end grid -->
+
+<!-- FOOTER
+================================================== -->
+<div id="wrapfooter">
+  <div class="grid">
+    <div class="row" id="footer">
+      <!-- to top button  -->
+      <p class="back-top floatright">
+        <a href="#top"><span></span></a>
+      </p>
+      <!-- 1st column -->
+      <div class="c3">
+        <img src="images/logo.png" style="padding-top: 70px;" alt="">
+      </div>
+      <!-- 2nd column -->
+      <div class="c3">
+        <h2 class="title">Author</h2>
+        <hr class="footerstress">
+        Have you read about these frameworks and find it difficult to put all the functions together and build a project? If yes, our tutorials will help you achieve that. <br>
+        -- Mr. Kingslife
+      </div>
+      <!-- 3rd column -->
+      <div class="c3">
+        <h2 class="title"><i class="icon-envelope-alt"></i> Contact</h2>
+        <hr class="footerstress">
+        <dl>
+          <dd><span>Telephone:</span>+234 803 425 5960</dd>
+          <dd>E-mail: <a href="more.html">contact@codeject.site</a></dd>
+        </dl>
+        <ul class="social-links" style="margin-top:15px;">
+          <li class="facebook-link smallrightmargin">
+          <a href="https://fb.me/codeject" class="facebook has-tip" target="_blank" title="Join us on Facebook">Facebook</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- copyright area -->
+<div class="copyright">
+  <div class="grid">
+    <div class="row">
+      <div class="c6">
+         CodeJect &copy; 2018. All Rights Reserved.
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END CONTENT AREA -->
+<!-- JAVASCRIPTS
+================================================== -->
+<!-- all -->
+<script src="../../js/modernizr-latest.js"></script>
+
+<!-- menu & scroll to top -->
+<script src="../../js/common.js"></script>
+
+<!-- slider -->
+<script src="../../js/jquery.cslider.js"></script>
+
+<!-- cycle -->
+<script src="../../js/jquery.cycle.js"></script>
+
+<!-- carousel items -->
+<script src="../../js/jquery.carouFredSel-6.0.3-packed.js"></script>
+
+<!-- twitter -->
+<script src="../../js/jquery.tweet.js"></script>
+
+<!-- Call Showcase - change 4 from min:4 and max:4 to the number of items you want visible -->
+<script type="text/javascript">
+$(window).load(function(){			
+			$('#recent-projects').carouFredSel({
+				responsive: true,
+				width: '100%',
+				auto: true,
+				circular	: true,
+				infinite	: false,
+				prev : {
+					button		: "#car_prev",
+					key			: "left",
+						},
+				next : {
+					button		: "#car_next",
+					key			: "right",
+							},
+				swipe: {
+					onMouse: true,
+					onTouch: true
+					},
+				scroll : 2000,
+				items: {
+					visible: {
+						min: 4,
+						max: 4
+					}
+				}
+			});
+		});	
+</script>
+
+<!-- Call opacity on hover images from carousel-->
+<script type="text/javascript">
+$(document).ready(function(){
+    $("img.imgOpa").hover(function() {
+      $(this).stop().animate({opacity: "0.6"}, 'slow');
+    },
+    function() {
+      $(this).stop().animate({opacity: "1.0"}, 'slow');
+    });
+  });
+</script>
+</body>
+</html>

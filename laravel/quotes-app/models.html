@@ -1,0 +1,357 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="viewport" content="width=device-width"/>
+<title>Laravel</title>
+<!-- STYLES & JQUERY 
+================================================== -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/icons.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/slider.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/skinblue.css"/><!-- change skin color -->
+<link rel="stylesheet" type="text/css" href="../../css/responsive.css"/>
+<link rel="stylesheet" href="../../css/prism.css" >
+<script src="../../js/jquery-1.9.0.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</head>
+<body>
+<!-- TOP LOGO & MENU
+================================================== -->
+<div class="grid">
+	<div class="row space-bot">
+		<!--Logo-->
+		<div class="c4">
+			<a href="../../index.html">
+			<img src="../../images/logo.png" class="logo" alt="">
+			</a>
+		</div>
+		<!--Menu-->
+		<div class="c8">
+      <nav id="topNav">
+      <ul id="responsivemenu">
+        <li class="last"><a href="../../index.html">Home</a></li>
+        <li><a href="#">Tutorials</a>
+        <ul style="display: none;">
+          <li><a href="../../laravel.html">Laravel</a></li>
+          <li><a href="../../mean-stack.html">MEAN Stack</a></li>         
+          <li><a href="../../ionic.html">Ionic Framework</a></li>
+        </ul>
+        </li>    
+      </ul>
+      </nav>
+  </div>
+	</div>
+</div>
+<div class="undermenuarea">
+</div>
+<!-- START content area
+================================================== -->
+<!-- HEADER
+================================================== -->
+<div class="undermenuarea">
+  <div class="boxedshadow">
+  </div>
+  <div class="grid">
+    <div class="row">
+      <div class="c8">
+        <h1 class="titlehead">LARAVEL</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CONTENT
+================================================== -->
+<div class="grid">
+    <div class="shadowundertop">
+    </div>
+    <div class="row">   
+      
+      <!-- MAIN CONTENT -->
+      <div class="c9">
+        <h1 class="maintitle space-top">
+        <span>Favorite Quotes App: Models</span>
+        </h1>
+        <div style="font-size: 18px;">
+          <span style="font-size: 26px; color: #0E8FAB">Laravel Database</span><br>
+          Our application requires a database to work. Laravel supports many database platforms, including: 
+          <ul style="list-style-type: square;">
+            <li>MySQL</li>
+            <li>SQLite</li>
+            <li>PostgreSQL and so many others </li>
+          </ul> <br>
+          In this example, we'll make use of <b>MySQL</b>. The <b>.env</b> file is where we set up configuration for database, mails, database and others. <br><br>
+          Modify the database section of the <b>.env</b> file <br>
+          <script type="text/plain" class="language-markup; line-numbers">
+            APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=base64:jyeFkLAmX6jckclTGPXId5JQULPrnPDMlpzqcZmrr7E=
+APP_DEBUG=true
+APP_LOG_LEVEL=debug
+APP_URL=http://localhost
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=quotes-app
+DB_USERNAME=root
+DB_PASSWORD=
+
+BROADCAST_DRIVER=log
+CACHE_DRIVER=file
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+QUEUE_DRIVER=sync
+
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+
+PUSHER_APP_ID=
+PUSHER_APP_KEY=
+PUSHER_APP_SECRET=
+PUSHER_APP_CLUSTER=mt1
+
+          </script>
+          The database name will be <b>quotes-app</b> obviously but you are free to choose any database name you prefer. Also ensure that you provide valid username and password. <br><br>
+          Head over to <b>phpMyAdmin</b> and create the database with the name <b>quotes-app</b>.<br><br>
+          <p>
+            <span style="font-size: 26px; color: #0E8FAB">Models</span><br>
+            A database Model is in charge of database table. So, we'll create one model for each table. A model can be created easily with php artisan command. <br><br>Run the command below to create a model for our Quote <br>
+            <script type="text/plain" class="language-markup; line-numbers">
+              php artisan make:model Quote -m
+            </script>
+            <b>NB:</b> In laravel, A model name is the singular of the table name. The model name is Quote, the database table will be quotes. The <b>-m</b> flag creates a migration. <br><br>
+            What is a Migration? Migration are classes that creates a database table. After running the command above, two files will be created for us. A Quote model in the <b>app</b> directory and a <b>timestamp_create_quotes_table.php</b> in the <b>database/migrations</b> directory.
+            <br>
+            <p>
+              Take a look at the <b>timestamp_create_quotes_table.php</b> file <br>
+              <script type="text/plain" class="language-php; line-numbers">
+                <?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateQuotesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('quotes', function (Blueprint $table) {
+            $table->increments('id');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('quotes');
+    }
+}
+
+              </script><br>
+              A migration have two functions. The <b>up</b> function to create the database table and the <b>down</b> which drops the table
+              <br><br>Update the <b>up</b> function to add a quote and author columns. <br>
+              <script type="text/plain" class="language-php; line-numbers">
+                 public function up()
+    {
+        Schema::create('quotes', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('quote');
+            $table->string('author');
+            $table->timestamps();
+        });
+    }
+              </script><br>
+              Good, we have defined the Schema for our database. To actually create the database in phpMyAdmin. Run the command below
+              <script type="text/plain" class="language-php">
+                php artisan migrate
+              </script><br>
+              If you receive a syntax error or access violation error. Edit the <b>AppServiceProvider.php</b> file in the <b>app/providers</b> directory. 
+              <script type="text/plain" class="language-php; line-numbers">
+                <?php
+
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
+
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        Schema::defaultStringLength(191);
+    }
+
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+    }
+}
+
+              </script>
+              Head over to phpMyAdmin and you will the tables created with rows. How cool is that!<br>
+              Let us move on to controllers.
+            </p>
+            <div >
+            <a style="text-align: left" href="layouts.html"><< Layouts </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a style="text-align: right" href="controllers.html">Controllers >> </a>
+          </div>
+          </p>
+        </div>
+      </div><!-- end main content -->
+      
+      <!-- SIDEBAR -->  
+      <div class="c3">
+        <div class="rightsidebar">
+  <h2 class="title stresstitle">Subsections</h2><br>
+  <a href="views.html">Views</a><br>
+  <a href="layouts.html">Layouts</a><br>
+  <a href="models.html">Models</a><br>
+  <a href="controllers.html">Controllers</a><br>
+  <a href="sessions.html">Sessions</a><br>
+  </div> 
+      </div><!-- end sidebar -->      
+    </div>
+</div><!-- end grid -->
+
+<!-- FOOTER
+================================================== -->
+<div id="wrapfooter">
+  <div class="grid">
+    <div class="row" id="footer">
+      <!-- to top button  -->
+      <p class="back-top floatright">
+        <a href="#top"><span></span></a>
+      </p>
+      <!-- 1st column -->
+      <div class="c3">
+        <img src="images/logo.png" style="padding-top: 70px;" alt="">
+      </div>
+      <!-- 2nd column -->
+      <div class="c3">
+        <h2 class="title">Author</h2>
+        <hr class="footerstress">
+        Have you read about these frameworks and find it difficult to put all the functions together and build a project? If yes, our tutorials will help you achieve that. <br>
+        -- Mr. Kingslife
+      </div>
+      <!-- 3rd column -->
+      <div class="c3">
+        <h2 class="title"><i class="icon-envelope-alt"></i> Contact</h2>
+        <hr class="footerstress">
+        <dl>
+          <dd><span>Telephone:</span>+234 803 425 5960</dd>
+          <dd>E-mail: <a href="more.html">contact@codeject.site</a></dd>
+        </dl>
+        <ul class="social-links" style="margin-top:15px;">
+          <li class="facebook-link smallrightmargin">
+          <a href="https://fb.me/codeject" class="facebook has-tip" target="_blank" title="Join us on Facebook">Facebook</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- copyright area -->
+<div class="copyright">
+  <div class="grid">
+    <div class="row">
+      <div class="c6">
+         CodeJect &copy; 2018. All Rights Reserved.
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END CONTENT AREA -->
+<!-- JAVASCRIPTS
+================================================== -->
+<!-- all -->
+<script src="../../js/modernizr-latest.js"></script>
+
+<!-- menu & scroll to top -->
+<script src="../../js/common.js"></script>
+
+<!-- slider -->
+<script src="../../js/jquery.cslider.js"></script>
+
+<!-- cycle -->
+<script src="../../js/jquery.cycle.js"></script>
+
+<!-- carousel items -->
+<script src="../../js/jquery.carouFredSel-6.0.3-packed.js"></script>
+
+<!-- twitter -->
+<script src="../../js/jquery.tweet.js"></script>
+
+<!-- Call Showcase - change 4 from min:4 and max:4 to the number of items you want visible -->
+<script type="text/javascript">
+$(window).load(function(){			
+			$('#recent-projects').carouFredSel({
+				responsive: true,
+				width: '100%',
+				auto: true,
+				circular	: true,
+				infinite	: false,
+				prev : {
+					button		: "#car_prev",
+					key			: "left",
+						},
+				next : {
+					button		: "#car_next",
+					key			: "right",
+							},
+				swipe: {
+					onMouse: true,
+					onTouch: true
+					},
+				scroll : 2000,
+				items: {
+					visible: {
+						min: 4,
+						max: 4
+					}
+				}
+			});
+		});	
+</script>
+
+<!-- Call opacity on hover images from carousel-->
+<script type="text/javascript">
+$(document).ready(function(){
+    $("img.imgOpa").hover(function() {
+      $(this).stop().animate({opacity: "0.6"}, 'slow');
+    },
+    function() {
+      $(this).stop().animate({opacity: "1.0"}, 'slow');
+    });
+  });
+</script>
+</body>
+</html>

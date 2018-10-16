@@ -1,0 +1,343 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="viewport" content="width=device-width"/>
+<title>CodeJect</title>
+<!-- STYLES & JQUERY 
+================================================== -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/icons.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/slider.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/skinblue.css"/><!-- change skin color -->
+<link rel="stylesheet" type="text/css" href="../../css/responsive.css"/>
+<link rel="stylesheet" href="../../css/prism.css" >
+<script src="../../js/jquery-1.9.0.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</head>
+<body>
+<!-- TOP LOGO & MENU
+================================================== -->
+<div class="grid">
+	<div class="row space-bot">
+		<!--Logo-->
+		<div class="c4">
+			<a href="../../index.html">
+			<img src="../../images/logo.png" class="logo" alt="">
+			</a>
+		</div>
+		<!--Menu-->
+		<div class="c8">
+      <nav id="topNav">
+      <ul id="responsivemenu">
+        <li class="last"><a href="../../index.html">Home</a></li>
+        <li><a href="#">Tutorials</a>
+        <ul style="display: none;">
+          <li><a href="../../laravel.html">Laravel</a></li>
+          <li><a href="../../mean-stack.html">MEAN Stack</a></li>         
+          <li><a href="../../ionic.html">Ionic Framework</a></li>
+        </ul>
+        </li>    
+      </ul>
+      </nav>
+  </div>
+	</div>
+</div>
+<div class="undermenuarea">
+</div>
+<!-- START content area
+================================================== -->
+<!-- HEADER
+================================================== -->
+<div class="undermenuarea">
+  <div class="boxedshadow">
+  </div>
+  <div class="grid">
+    <div class="row">
+      <div class="c8">
+        <h1 class="titlehead">MEAN Stack</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CONTENT
+================================================== -->
+<div class="grid">
+    <div class="shadowundertop">
+    </div>
+    <div class="row">   
+      
+      <!-- MAIN CONTENT -->
+      <div class="c9">
+        <h1 class="maintitle space-top">
+        <span>Create REST-API</span>
+        </h1>
+        <div style="font-size: 18px;">
+          <p>
+            <b style="font-size: 20px; color: #0E8FAB">Read, Update & Delete Routes</b><br>
+            Its now time for us to add routes to read, update and delete product from the database. Add the route below (under the create route) to read all products from the database. <br><br>
+            Modify <b>routes/product.js</b> to include the changes below <br>
+            <script type="text/plain" class="language-javascript">
+              const Product = require( '../models/product' );
+
+module.exports = ( router ) => {
+    // Create Product
+    router.post( '/add', ( req, res ) => {
+        if ( !req.body.name ) {
+            res.send( { success: false, message: 'Provide the product name' });
+        } else {
+            if ( !req.body.desc ) {
+                res.send( { success: false, message: 'Provide the product description' });
+            } else {
+                if ( !req.body.price ) {
+                    res.send( { success: false, message: 'Provide product price' });
+                } else {
+                    let product = new Product( {
+                        name: req.body.name,
+                        desc: req.body.desc,
+                        price: req.body.price
+                    });
+
+                    product.save(( err ) => {
+                        if ( err ) {
+                            res.send( { success: false, message: 'Could NOT product details. Error: ', err });
+                        } else {
+                            res.send( { success: true, message: 'Saved Successfully' });
+                        }
+                    });
+                }
+            }
+        }
+    });
+
+    // Read Products
+    router.get( '/all', ( req, res ) => {
+        Product.find( {}, ( err, product ) => {
+            if ( err ) {
+                res.json( { success: false, message: err });
+            } else {
+                if ( !product ) {
+                    res.json( { success: false, message: 'No Product found' });
+                } else {
+                    res.json( { success: true, product: product });
+                }
+            }
+        });
+    });
+
+    // Get single product to be updated
+    router.get( '/product/:id', ( req, res ) => {
+        if ( !req.params.id ) {
+            res.send( { success: false, message: 'No ID was provided' });
+        } else {
+            Product.findOne( { _id: req.params.id }, ( err, product ) => {
+                if ( err ) {
+                    res.json( { success: false, message: err });
+                } else {
+                    if ( !product ) {
+                        res.json( { success: false, message: 'No Product found with the id' });
+                    } else {
+                        res.json( { success: true, product: product });
+                    }
+                }
+            });
+        }
+    });
+
+    // Update product
+    router.put( '/update', ( req, res ) => {
+        if ( !req.body._id ) {
+            res.json( { success: false, message: 'No valid id provided' });
+        } else {
+            Product.findOne( { _id: req.body._id }, ( err, product ) => {
+                if ( err ) {
+                    res.json( { success: false, message: 'Not a valid ID' });
+                } else {
+                    if ( !product ) {
+                        res.json( { success: false, message: 'Product ID not found' });
+                    } else {
+                        product.name = req.body.name;
+                        product.desc = req.body.desc;
+                        product.price = req.body.price;
+
+                        product.save(( err ) => {
+                            if ( err ) {
+                                res.json( { success: false, message: err });
+                            } else {
+                                res.json( { success: true, message: 'Product Updated' });
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    });
+
+    //Delete product
+    router.delete('/delete/:id', (req, res) => {
+    if(!req.params.id){
+        res.json({success: false, message: 'No ID provided'});
+    } else {
+        Product.findOne({_id: req.params.id}, (err, product) => {
+            if(err){
+                res.json({success: false, message: 'Invalid Id'});
+            } else {
+                if(!product){
+                    res.json({success: false, message: 'No Product found with the ID'});
+                } else {
+                    product.remove((err) => {
+                        if(err){
+                            res.json({success: false, message: err });
+                        } else {
+                            res.json({success: true, message: 'Product deleted'});
+                        }
+                    });
+                }
+            }
+        });
+    }
+});
+
+
+    return router;
+}
+
+            </script><br>
+            The code above might seem very long. Actually, if you take some time to go through it, you will get the sense of it. <br>In part 1, we've discussed the create route. In the Read route, we used Mongoose <b>find</b> function, passing an empty paranthesis which returns all the records. After couple of if statements to check data returned, then passed it as a json object. <br><br>
+            Similiar concepts applies to other routes. Our API is ready. We'll can use any client to connect to it. Recall that APIs are language or platform independent. That means, we can use any framework (Ionic, React-native, others) or any language (Javascript, PHP, Java, C#, others) to connect to it. <br><br>
+            Play around with it in Postman. To get all products, what will be the url? Well, hope you guessed it right! It will be <b>http://localhost:8080/product/all</b> and request type will be <b>GET</b><br><br>
+            <img src="../../images/mean-two/all.png"><br><br>
+            Recall that we can view our database using the Robomongo UI tool we downloaded. That's it for our product API.
+
+          </p>
+        </div>
+        <div >
+            <a style="text-align: left" href="restful-api.html"><< Part 1</a>
+        </div>
+      </div>
+      <!-- end main content -->
+      
+      <!-- SIDEBAR -->  
+      <div class="c3">
+        <div class="rightsidebar">
+  <h2 class="title stresstitle">Subsections</h2><br>
+ <a href="restful-api.html">Part 1</a><br>
+  <a href="rest-api_crud.html">Part 2</a><br>
+  </div> 
+      </div><!-- end sidebar -->      
+    </div>
+</div><!-- end grid -->
+
+<!-- FOOTER
+================================================== -->
+<div id="wrapfooter">
+  <div class="grid">
+    <div class="row" id="footer">
+      <!-- to top button  -->
+      <p class="back-top floatright">
+        <a href="#top"><span></span></a>
+      </p>
+      <!-- 1st column -->
+      <div class="c3">
+        <img src="images/logo.png" style="padding-top: 70px;" alt="">
+      </div>
+      <!-- 2nd column -->
+      <div class="c3">
+        <h2 class="title">Author</h2>
+        <hr class="footerstress">
+        Have you read about these frameworks and find it difficult to put all the functions together and build a project? If yes, our tutorials will help you achieve that. <br>
+        -- Mr. Kingslife
+      </div>
+      <!-- 3rd column -->
+      <div class="c3">
+        <h2 class="title"><i class="icon-envelope-alt"></i> Contact</h2>
+        <hr class="footerstress">
+        <dl>
+          <dd><span>Telephone:</span>+234 803 425 5960</dd>
+          <dd>E-mail: <a href="more.html">contact@codeject.site</a></dd>
+        </dl>
+        <ul class="social-links" style="margin-top:15px;">
+          <li class="facebook-link smallrightmargin">
+          <a href="https://fb.me/codeject" class="facebook has-tip" target="_blank" title="Join us on Facebook">Facebook</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- copyright area -->
+<div class="copyright">
+  <div class="grid">
+    <div class="row">
+      <div class="c6">
+         CodeJect &copy; 2018. All Rights Reserved.
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END CONTENT AREA -->
+<!-- JAVASCRIPTS
+================================================== -->
+<!-- all -->
+<script src="../../js/modernizr-latest.js"></script>
+
+<!-- menu & scroll to top -->
+<script src="../../js/common.js"></script>
+
+<!-- slider -->
+<script src="../../js/jquery.cslider.js"></script>
+
+<!-- cycle -->
+<script src="../../js/jquery.cycle.js"></script>
+
+<!-- carousel items -->
+<script src="../../js/jquery.carouFredSel-6.0.3-packed.js"></script>
+
+<!-- twitter -->
+<script src="../../js/jquery.tweet.js"></script>
+
+<!-- Call Showcase - change 4 from min:4 and max:4 to the number of items you want visible -->
+<script type="text/javascript">
+$(window).load(function(){			
+			$('#recent-projects').carouFredSel({
+				responsive: true,
+				width: '100%',
+				auto: true,
+				circular	: true,
+				infinite	: false,
+				prev : {
+					button		: "#car_prev",
+					key			: "left",
+						},
+				next : {
+					button		: "#car_next",
+					key			: "right",
+							},
+				swipe: {
+					onMouse: true,
+					onTouch: true
+					},
+				scroll : 2000,
+				items: {
+					visible: {
+						min: 4,
+						max: 4
+					}
+				}
+			});
+		});	
+</script>
+
+<!-- Call opacity on hover images from carousel-->
+<script type="text/javascript">
+$(document).ready(function(){
+    $("img.imgOpa").hover(function() {
+      $(this).stop().animate({opacity: "0.6"}, 'slow');
+    },
+    function() {
+      $(this).stop().animate({opacity: "1.0"}, 'slow');
+    });
+  });
+</script>
+</body>
+</html>

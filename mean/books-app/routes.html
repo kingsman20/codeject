@@ -1,0 +1,392 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="viewport" content="width=device-width"/>
+<title>CodeJect</title>
+<!-- STYLES & JQUERY 
+================================================== -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/icons.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/slider.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/skinblue.css"/><!-- change skin color -->
+<link rel="stylesheet" type="text/css" href="../../css/responsive.css"/>
+<link rel="stylesheet" href="../../css/prism.css" >
+<script src="../../js/jquery-1.9.0.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</head>
+<body>
+<!-- TOP LOGO & MENU
+================================================== -->
+<div class="grid">
+	<div class="row space-bot">
+		<!--Logo-->
+		<div class="c4">
+			<a href="../../index.html">
+			<img src="../../images/logo.png" class="logo" alt="">
+			</a>
+		</div>
+		<!--Menu-->
+		<div class="c8">
+      <nav id="topNav">
+      <ul id="responsivemenu">
+        <li class="last"><a href="../../index.html">Home</a></li>
+        <li><a href="#">Tutorials</a>
+        <ul style="display: none;">
+          <li><a href="../../laravel.html">Laravel</a></li>
+          <li><a href="../../mean-stack.html">MEAN Stack</a></li>         
+          <li><a href="../../ionic.html">Ionic Framework</a></li>
+        </ul>
+        </li>    
+      </ul>
+      </nav>
+  </div>
+	</div>
+</div>
+<div class="undermenuarea">
+</div>
+<!-- START content area
+================================================== -->
+<!-- HEADER
+================================================== -->
+<div class="undermenuarea">
+  <div class="boxedshadow">
+  </div>
+  <div class="grid">
+    <div class="row">
+      <div class="c8">
+        <h1 class="titlehead">MEAN Stack</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CONTENT
+================================================== -->
+<div class="grid">
+    <div class="shadowundertop">
+    </div>
+    <div class="row">   
+      
+      <!-- MAIN CONTENT -->
+      <div class="c9">
+        <h1 class="maintitle space-top">
+        <span>Books Catalogue: Routing</span>
+        </h1>
+        <div style="font-size: 18px;">
+          <p>
+            <b style="font-size: 20px; color: #0E8FAB">Angular Route Module</b><br>
+            It's good programming principle to create a module to manage our routes. create a file <b>app-routing.module.ts</b> in the <b>client/src/app</b> directory. <br><br>
+            <b>app-routing.module.ts</b>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+@NgModule({
+    declarations: [],
+    imports: [],
+    providers: [],
+    bootstrap: []
+})
+export class AppRoutingModule {}
+            </script><br>
+            Since this a module, add it to the <b>app.module.ts</b> <br><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { AppRoutingModule } from './app-routing.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+            </script><br>
+            <p>
+              <span style="font-size: 26px; color: #0E8FAB">Adding Bootstrap</span><br>
+              There are couple of options available for adding bootstrap. The fatest method is using CDN. Add the CDN to the <b>client/src/index.html</b> page. <br>
+              <script type="text/plain" class="language-javascript; line-numbers">
+                <!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>First App</title>
+  <base href="/">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <app-root></app-root>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">&lt;/script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">&lt;/script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">&lt;/script>
+</body>
+</html>
+
+              </script><br>
+              Notice that we add the css at the top and the javascript at the bottom of the page. <br><br>
+               <span style="font-size: 26px; color: #0E8FAB">Components</span><br>
+              Make a new folder called components in the <b>client/src/app</b> directory. change directory to this folder and run the commands below to create our first component <br><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+                ng generate component home
+            </script><br>
+            Also generate another component to hold the navbar <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+                ng generate component navbar
+            </script><br>
+            We'll build the navbar using a navbar from bootstrap. Add to <b>navbar.component.html</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+                <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" href="/">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
+    aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Add Book</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+            </script><br>
+            To use the component, add the selector in the <b>app.component.html</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              <app-navbar></app-navbar>
+            </script><br>
+            You should now see the navbar displayed. Now we have the navbar and the home component, let us modify the route module to use the home controller. <br><br>
+            <b>app-routing.module.ts</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { HomeComponent } from './components/home/home.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+const appRoutes: Routes = [
+    { path: '', component: HomeComponent }
+]
+
+@NgModule({
+    declarations: [],
+    imports: [RouterModule.forRoot(appRoutes)],
+    providers: [],
+    bootstrap: [],
+    exports: [RouterModule]
+})
+export class AppRoutingModule {}
+            </script><br>
+            We also need to add the router outlet to our app component to use the routers we defined. <br><br>
+            <b>app.component.ts</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              <app-navbar></app-navbar>
+<div class="container">
+    <router-outlet></router-outlet>
+</div>
+            </script><br>
+            Modify the <b>home.component.html</b> to see if the changes is effected. <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              <h1 class="page-header">home</h1>
+            </script><br>
+            You should now see the home page <br><br>
+            <img src="../../images/mean-one/firstroute.png">
+            </p><br><br>
+            We'll add a another component for adding books. Run <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              ng g component addBooks
+            </script><br>
+            Add it to the list of routes in the <b>app-routing.module.ts</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { AddBooksComponent } from './components/add-books/add-books.component';
+import { HomeComponent } from './components/home/home.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+const appRoutes: Routes = [
+    { path: '', component: HomeComponent },
+    { path: 'addBooks', component: AddBooksComponent }
+]
+
+@NgModule({
+    declarations: [],
+    imports: [RouterModule.forRoot(appRoutes)],
+    providers: [],
+    bootstrap: [],
+    exports: [RouterModule]
+})
+export class AppRoutingModule {}
+            </script><br>
+            Any request to the <b>/addBooks</b> will use the <b>AddBooksComponent</b> component. To use the router from the navigation, we use <b>routerLink</b>. Modify the <b>navbar.component.html</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" routerLink="/home">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
+    aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+  <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+    <ul class="navbar-nav mr-auto">
+      <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+        <a class="nav-link" routerLink="/">Home </a>
+      </li>
+      <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+        <a class="nav-link" routerLink="/addBooks">Add Book</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+            </script><br>
+            Now, you should be able to navigate the pages from the navbar. How cool is that!
+
+          </p>
+          <div >
+            <a style="text-align: left" href="mean-installation.html"><< Installations </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a style="text-align: right" href="models.html">Models >> </a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- end main content -->
+      
+      <!-- SIDEBAR -->  
+      <div class="c3">
+        <div class="rightsidebar">
+  <h2 class="title stresstitle">Subsections</h2><br>
+  <a href="mean-installation.html">Installation</a><br>
+  <a href="routes.html">Routes</a><br>
+  <a href="models.html">Models</a><br>
+  <a href="forms.html">Reactive Forms</a><br>
+  <a href="crud.html">CRUD Operations</a><br>
+  </div> 
+      </div><!-- end sidebar -->       
+    </div>
+</div><!-- end grid -->
+
+<!-- FOOTER
+================================================== -->
+<div id="wrapfooter">
+  <div class="grid">
+    <div class="row" id="footer">
+      <!-- to top button  -->
+      <p class="back-top floatright">
+        <a href="#top"><span></span></a>
+      </p>
+      <!-- 1st column -->
+      <div class="c3">
+        <img src="images/logo.png" style="padding-top: 70px;" alt="">
+      </div>
+      <!-- 2nd column -->
+      <div class="c3">
+        <h2 class="title">Author</h2>
+        <hr class="footerstress">
+        Have you read about these frameworks and find it difficult to put all the functions together and build a project? If yes, our tutorials will help you achieve that. <br>
+        -- Mr. Kingslife
+      </div>
+      <!-- 3rd column -->
+      <div class="c3">
+        <h2 class="title"><i class="icon-envelope-alt"></i> Contact</h2>
+        <hr class="footerstress">
+        <dl>
+          <dd><span>Telephone:</span>+234 803 425 5960</dd>
+          <dd>E-mail: <a href="more.html">contact@codeject.site</a></dd>
+        </dl>
+        <ul class="social-links" style="margin-top:15px;">
+          <li class="facebook-link smallrightmargin">
+          <a href="https://fb.me/codeject" class="facebook has-tip" target="_blank" title="Join us on Facebook">Facebook</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- copyright area -->
+<div class="copyright">
+  <div class="grid">
+    <div class="row">
+      <div class="c6">
+         CodeJect &copy; 2018. All Rights Reserved.
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END CONTENT AREA -->
+<!-- JAVASCRIPTS
+================================================== -->
+<!-- all -->
+<script src="../../js/modernizr-latest.js"></script>
+
+<!-- menu & scroll to top -->
+<script src="../../js/common.js"></script>
+
+<!-- slider -->
+<script src="../../js/jquery.cslider.js"></script>
+
+<!-- cycle -->
+<script src="../../js/jquery.cycle.js"></script>
+
+<!-- carousel items -->
+<script src="../../js/jquery.carouFredSel-6.0.3-packed.js"></script>
+
+<!-- twitter -->
+<script src="../../js/jquery.tweet.js"></script>
+
+<!-- Call Showcase - change 4 from min:4 and max:4 to the number of items you want visible -->
+<script type="text/javascript">
+$(window).load(function(){			
+			$('#recent-projects').carouFredSel({
+				responsive: true,
+				width: '100%',
+				auto: true,
+				circular	: true,
+				infinite	: false,
+				prev : {
+					button		: "#car_prev",
+					key			: "left",
+						},
+				next : {
+					button		: "#car_next",
+					key			: "right",
+							},
+				swipe: {
+					onMouse: true,
+					onTouch: true
+					},
+				scroll : 2000,
+				items: {
+					visible: {
+						min: 4,
+						max: 4
+					}
+				}
+			});
+		});	
+</script>
+
+<!-- Call opacity on hover images from carousel-->
+<script type="text/javascript">
+$(document).ready(function(){
+    $("img.imgOpa").hover(function() {
+      $(this).stop().animate({opacity: "0.6"}, 'slow');
+    },
+    function() {
+      $(this).stop().animate({opacity: "1.0"}, 'slow');
+    });
+  });
+</script>
+</body>
+</html>

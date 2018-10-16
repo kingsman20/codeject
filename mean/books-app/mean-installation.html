@@ -1,0 +1,372 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="viewport" content="width=device-width"/>
+<title>Codeject</title>
+<!-- STYLES & JQUERY 
+================================================== -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/icons.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/slider.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/skinblue.css"/><!-- change skin color -->
+<link rel="stylesheet" type="text/css" href="../../css/responsive.css"/>
+<link rel="stylesheet" href="../../css/prism.css" >
+<script src="../../js/jquery-1.9.0.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</head>
+<body>
+<!-- TOP LOGO & MENU
+================================================== -->
+<div class="grid">
+	<div class="row space-bot">
+		<!--Logo-->
+		<div class="c4">
+			<a href="../../index.html">
+			<img src="../../images/logo.png" class="logo" alt="">
+			</a>
+		</div>
+		<!--Menu-->
+		<div class="c8">
+      <nav id="topNav">
+      <ul id="responsivemenu">
+        <li class="last"><a href="../../index.html">Home</a></li>
+        <li><a href="#">Tutorials</a>
+        <ul style="display: none;">
+          <li><a href="../../laravel.html">Laravel</a></li>
+          <li><a href="../../mean-stack.html">MEAN Stack</a></li>         
+          <li><a href="../../ionic.html">Ionic Framework</a></li>
+        </ul>
+        </li>    
+      </ul>
+      </nav>
+  </div>
+	</div>
+</div>
+<div class="undermenuarea">
+</div>
+<!-- START content area
+================================================== -->
+<!-- HEADER
+================================================== -->
+<div class="undermenuarea">
+  <div class="boxedshadow">
+  </div>
+  <div class="grid">
+    <div class="row">
+      <div class="c8">
+        <h1 class="titlehead">MEAN Stack</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CONTENT
+================================================== -->
+<div class="grid">
+    <div class="shadowundertop">
+    </div>
+    <div class="row">   
+      
+      <!-- MAIN CONTENT -->
+      <div class="c9">
+        <h1 class="maintitle space-top">
+        <span>Books Catalogue: Installation</span>
+        </h1>
+        <div style="font-size: 18px;">
+          <p>
+            <b style="font-size: 20px; color: #0E8FAB">Objectives:</b> We'll build an web app to manage our catalogue of books
+            <ul style="list-style-type: disc">
+              <li>Installing the MEAN Stack Framework</li>
+              <li>Angular Basic</li>
+              <li>Working Express and Nodejs runtime </li>
+              <li>Performing CRUD (Create, Read, Update, Delete) operations with Mongodb backend</li>
+            </ul>
+          </p>
+          <p>
+            <span style="font-size: 26px; color: #0E8FAB">Installing Node and Express</span><br>
+            There are a lot of things to install. First, download and install <a href="https://nodejs.org/en/download/">nodejs</a> <br> You can check if you already have it installed using the command <b>node -v</b> <br><br>
+            Create a folder for the project (named books-catalogue). Open a command terminal and run in the folder directory <br>
+            <script type="text/plain" class="language-markup">
+              npm init
+            </script><br>
+            This will set up the configurations for our project. Follow the prompt. The most important thing  is to set the entry point as <b>index.js</b>. This will create a <b>package.json</b> file in the root directory.<br><br>
+            Run the command below to install <b>Express</b><br>
+            <script type="text/plain" class="language-markup">
+              npm install express --save
+            </script><br>
+            After installing. Create the entry file <b>index.js</b> and add the content <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+               const express = require('express')
+const app = express()
+
+app.get('/', (req, res) => {
+    res.send('Hello MEAN App');    
+})
+
+app.listen(8080, () => {
+    console.log('Listening on port 8080');
+})
+            </script><br>
+            We are going to use nodemon to ensure that changes are automatically effected. Run the command below to install nodemon <br>
+            <script type="text/plain" class="language-markup">
+              npm install -g nodemon
+            </script><br>
+            To start the app, run <br>
+            <script type="text/plain" class="language-markup">
+              nodemon index.js
+            </script><br>
+            Head over to the browser and enter the url <b>localhost:8080/</b><br><br>
+            <img src="../../images/mean-one/welcome.png"></li><br><br>
+          </p>
+          <p>
+            <span style="font-size: 26px; color: #0E8FAB">Installing Mongodb </span><br>
+             Download Community Version of Mongodb from <a href="https://www.mongodb.com/download-center">here</a><br><br>
+             Working with the database from the terminal can be very tasking. So, we are going to use Robomongo. Download <a href="https://robomongo.org/download">here</a><br><br>
+             To run the database. Open a new command terminal, navigate to the folder where it is installed. for windows, the path is something like <b>C:/Program Files/MongoDB/Server/3.4/bin</b>. Run <br><br>
+             <script type="text/plain" class="language-markup">
+              mongod
+            </script><br>
+            With the database running. Note the Port from the terminal. Open robomongo and connect to the database. This gives us a UI for working with mongodb. <br><br>
+            Back to our project folder, install mongoose by running the command below in the project folder directory.<br>
+            <script type="text/plain" class="language-markup">
+              npm install mongoose --save
+            </script><br>
+            Import it to app. Modify <b>index.js</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              const express = require('express');
+const app = express();
+
+const mongoose = require('mongoose');
+
+mongoose.Promise = global.Promise;
+mongoose.connect();
+
+app.get('/', (req, res) => {
+    res.send('Hello MEAN App');    
+});
+
+app.listen(8080, () => {
+    console.log('Listening on port 8080');
+});
+            </script><br>
+            We'll store our configurations in a separate file to avoid duplicating our code. Create a folder named <b>config</b>. Create a new file in this folder <b>database.js</b> <br><br>
+            <b>database.js</b>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              const crypto = require('crypto').randomBytes(256).toString('hex');
+
+module.exports = {
+    uri: 'mongodb://localhost:27017/books-catalogue',
+    secret: crypto,
+    db: 'books-catalogue'
+}
+            </script><br>
+            The secret will be used to manage sessions and other encryptions throughout our app and we have use <b>crypto</b> to generate some random digits. <br><br>
+            Modify <b>index.js</b> to connect to our database using mongoose. <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              const express = require('express');
+const app = express();
+const mongoose = require('mongoose');
+const config = require('./config/database');
+
+mongoose.Promise = global.Promise;
+mongoose.connect(config.uri, (err) => {
+    if(err){
+        console.log('Failed to connect ', err);
+    } else {
+        console.log('Connected to ', config.db);
+    }
+});
+
+app.get('/', (req, res) => {
+    res.send('Hello MEAN App');    
+});
+
+app.listen(8080, () => {
+    console.log('Listening on port 8080');
+});
+            </script><br>
+            Make sure that the mongodb instance is running. You should see connected to database_name in the console.
+        </p>
+        <p>
+            <span style="font-size: 26px; color: #0E8FAB">Installing Angular</span><br>
+            Run the command below to install angular globally on your computer<br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              npm install -g @angular/cli
+            </script><br>
+            After installing the angular cli. We can use it to scaffold a new angular app. Run the command below in the project directory to creates a new angular app.
+            <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              ng new client && cd client/ && ng serve
+            </script><br>
+            The app is named <b>client</b>. The <b>ng serve</b> command starts a live development server. Head over to the browser and enter <b>http://localhost:4200</b>, you should see the welcome page with the <b>app works!</b> message. <br><br>
+            If you have no idea on how angular works, try reading the <a href="https://angular.io/docs">documentation</a>. Everything in angular is a component. From a page, the navbar and so on. The components are injected where the selector is used. <br><br>
+            When we are ready for production, we build the frontend (angular). Run the command below in the <b>client</b> directory <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              ng build
+            </script><br>
+            This creates a production ready version of the app. Notice the <b>dist</b> directory that is created in the <b>client</b> directory. <br><br>
+            From now on, we'll refer to the node part a the backend and angular folder as the frontend or client. <br><br> 
+            In the backend, Modify the <b>index.js</b> file to redirect all request to the frontend. <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              const express = require('express');
+const app = express();
+const mongoose = require('mongoose');
+const config = require('./config/database');
+const path = require('path');
+
+mongoose.Promise = global.Promise;
+mongoose.connect(config.uri, (err) => {
+    if(err){
+        console.log('Failed to connect ', err);
+    } else {
+        console.log('Connected to ', config.db);
+    }
+});
+
+app.use(express.static(__dirname + '/client/dist/'));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/client/dist/index.html'));    
+});
+
+app.listen(8080, () => {
+    console.log('Listening on port 8080');
+});
+            </script><br>
+            <br>The way we develop with angular is that we are going to have both server running: <b>localhost:8080</b> for the backend and <b>localhost:4200</b> for the frontend. <br><br> With both servers running, refresh the backend, you should now see the <b>index.html</b> view. 
+
+        </p>
+        <div >
+            <a style="text-align: right" href="routes.html">Routes >> </a>
+        </div>
+        </div>
+      </div>
+      <!-- end main content -->
+      
+      <!-- SIDEBAR -->  
+      <div class="c3">
+        <div class="rightsidebar">
+  <h2 class="title stresstitle">Subsections</h2><br>
+  <a href="mean-installation.html">Installation</a><br>
+  <a href="routes.html">Routes</a><br>
+  <a href="models.html">Models</a><br>
+  <a href="forms.html">Reactive Forms</a><br>
+  <a href="crud.html">CRUD Operations</a><br>
+  </div> 
+      </div><!-- end sidebar -->      
+    </div>
+</div><!-- end grid -->
+
+<!-- FOOTER
+================================================== -->
+<div id="wrapfooter">
+  <div class="grid">
+    <div class="row" id="footer">
+      <!-- to top button  -->
+      <p class="back-top floatright">
+        <a href="#top"><span></span></a>
+      </p>
+      <!-- 1st column -->
+      <div class="c3">
+        <img src="images/logo.png" style="padding-top: 70px;" alt="">
+      </div>
+      <!-- 2nd column -->
+      <div class="c3">
+        <h2 class="title">Author</h2>
+        <hr class="footerstress">
+        Have you read about these frameworks and find it difficult to put all the functions together and build a project? If yes, our tutorials will help you achieve that. <br>
+        -- Mr. Kingslife
+      </div>
+      <!-- 3rd column -->
+      <div class="c3">
+        <h2 class="title"><i class="icon-envelope-alt"></i> Contact</h2>
+        <hr class="footerstress">
+        <dl>
+          <dd><span>Telephone:</span>+234 803 425 5960</dd>
+          <dd>E-mail: <a href="more.html">contact@codeject.site</a></dd>
+        </dl>
+        <ul class="social-links" style="margin-top:15px;">
+          <li class="facebook-link smallrightmargin">
+          <a href="https://fb.me/codeject" class="facebook has-tip" target="_blank" title="Join us on Facebook">Facebook</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- copyright area -->
+<div class="copyright">
+  <div class="grid">
+    <div class="row">
+      <div class="c6">
+         CodeJect &copy; 2018. All Rights Reserved.
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END CONTENT AREA -->
+<!-- JAVASCRIPTS
+================================================== -->
+<!-- all -->
+<script src="../../js/modernizr-latest.js"></script>
+
+<!-- menu & scroll to top -->
+<script src="../../js/common.js"></script>
+
+<!-- slider -->
+<script src="../../js/jquery.cslider.js"></script>
+
+<!-- cycle -->
+<script src="../../js/jquery.cycle.js"></script>
+
+<!-- carousel items -->
+<script src="../../js/jquery.carouFredSel-6.0.3-packed.js"></script>
+
+<!-- twitter -->
+<script src="../../js/jquery.tweet.js"></script>
+
+<!-- Call Showcase - change 4 from min:4 and max:4 to the number of items you want visible -->
+<script type="text/javascript">
+$(window).load(function(){			
+			$('#recent-projects').carouFredSel({
+				responsive: true,
+				width: '100%',
+				auto: true,
+				circular	: true,
+				infinite	: false,
+				prev : {
+					button		: "#car_prev",
+					key			: "left",
+						},
+				next : {
+					button		: "#car_next",
+					key			: "right",
+							},
+				swipe: {
+					onMouse: true,
+					onTouch: true
+					},
+				scroll : 2000,
+				items: {
+					visible: {
+						min: 4,
+						max: 4
+					}
+				}
+			});
+		});	
+</script>
+
+<!-- Call opacity on hover images from carousel-->
+<script type="text/javascript">
+$(document).ready(function(){
+    $("img.imgOpa").hover(function() {
+      $(this).stop().animate({opacity: "0.6"}, 'slow');
+    },
+    function() {
+      $(this).stop().animate({opacity: "1.0"}, 'slow');
+    });
+  });
+</script>
+</body>
+</html>

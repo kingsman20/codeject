@@ -1,0 +1,633 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="viewport" content="width=device-width"/>
+<title>Codeject</title>
+<!-- STYLES & JQUERY 
+================================================== -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/icons.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/slider.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/skinblue.css"/><!-- change skin color -->
+<link rel="stylesheet" type="text/css" href="../../css/responsive.css"/>
+<link rel="stylesheet" href="../../css/prism.css" >
+<script src="../../js/jquery-1.9.0.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</head>
+<body>
+<!-- TOP LOGO & MENU
+================================================== -->
+<div class="grid">
+	<div class="row space-bot">
+		<!--Logo-->
+		<div class="c4">
+			<a href="../../index.html">
+			<img src="../../images/logo.png" class="logo" alt="">
+			</a>
+		</div>
+		<!--Menu-->
+		<div class="c8">
+      <nav id="topNav">
+      <ul id="responsivemenu">
+        <li class="last"><a href="../../index.html">Home</a></li>
+        <li><a href="#">Tutorials</a>
+        <ul style="display: none;">
+          <li><a href="../../laravel.html">Laravel</a></li>
+          <li><a href="../../mean-stack.html">MEAN Stack</a></li>         
+          <li><a href="../../ionic.html">Ionic Framework</a></li>
+        </ul>
+        </li>    
+      </ul>
+      </nav>
+  </div>
+	</div>
+</div>
+<div class="undermenuarea">
+</div>
+<!-- START content area
+================================================== -->
+<!-- HEADER
+================================================== -->
+<div class="undermenuarea">
+  <div class="boxedshadow">
+  </div>
+  <div class="grid">
+    <div class="row">
+      <div class="c8">
+        <h1 class="titlehead">LARAVEL</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CONTENT
+================================================== -->
+<div class="grid">
+    <div class="shadowundertop">
+    </div>
+    <div class="row">   
+      
+      <!-- MAIN CONTENT -->
+      <div class="c9">
+        <h1 class="maintitle space-top">
+        <span>Favorite Quotes App: Controllers</span>
+        </h1>
+        <div style="font-size: 18px;">
+          <p>
+            <span style="font-size: 26px; color: #0E8FAB">Controllers</span><br>
+            Remember we had already worked with controllers when we created one for our pages. <br> We'll create another for our Quotes. This controller will be responsible for managing(creating, reading, updating and deleting) quotes from the database. Run the command below in the terminal <br><br>
+            <script type="text/plain" class="language-markup">
+              php artisan make:controller QuotesController -r
+            </script>
+            This creates a quotes controller. Note the naming convention. Another part of the command is the <b>-r</b> flag. This command creates a RESTful controller with functions for managing the data. <br><br>
+            <b>QuotesController.php</b>
+            <script type="text/plain" class="language-php; line-numbers">
+              <?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class QuotesController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+}
+
+            </script><br>
+          </p>
+          <p>
+            <span style="font-size: 26px; color: #0E8FAB">Create Quotes</span><br>
+            Create a <b>add-quotes.blade.php</b> file in the <b>resources/views</b> directory and add the following contents. This will contain a form for adding quotes<br><br>
+            <b>add-quotes.blade.php</b>
+            <script type="text/plain" class="language-php; line-numbers">
+              @extends('layout')
+
+@section('content')
+
+    <p>
+        Add A New Quote
+        <form action="/add-quotes" method="post">
+            {{ csrf_field() }}
+            <div class="form-group">
+                <input type="text" name="quote" placeholder="Enter Quote" class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="text" name="author" placeholder="Enter Author" class="form-control">
+            </div>
+            
+            <button type="Submit" class="btn btn-primary">Submit</button>
+        </form>
+    </p>
+
+@stop
+            </script><br>
+            Notice that we have included a <b>csrf()</b> function. This is required in laravel for any post request. <br>
+            Add the route to return the view. <br><br> <b>web.php</b> file. <br>
+            <script type="text/plain" class="language-php; line-numbers">
+              Route::get('/add-quotes', 'QuotesController@create');
+            </script> <br>
+            Modify the create method of <b>QuotesController.php</b> to return the view. <br>
+            <script type="text/plain" class="language-php; line-numbers">
+              public function create()
+    {
+        return view('add-quotes');
+    }
+            </script>
+            Now if we head of the browser and enter <b>quotes.dev/add-quotes</b>, we should see the view. <br><br>
+            When we submit the form, we'll make a <b>post</b> request to <b>/add-quotes</b> route. <br><br>
+            Add the route to the <b>web.php</b> file.
+            <script type="text/plain" class="language-php; line-numbers">
+              Route::post('/add-quotes', [
+    'uses' => 'QuotesController@store'
+]);
+            </script>
+            <br>
+            What we can do first is to die dump the request so that we can see what values are returned when the user submits the form. Modify the store method of the <b>QuotesController</b>
+            <script type="text/plain" class="language-php; line-numbers">
+              public function store(Request $request)
+    {
+        dd($request->all());
+    }
+            </script><br>
+            Let us test it. Head over to the browser and enter <b>quotes.dev/add-quotes</b>. You should see the add quotes page below <br><br>
+            <img src="../../images/laravel-one/addquotes.png">
+          </p>
+          <p>
+            Fill the form and submit. You should the request dumped to the page. We have successfully send the values to the <b>store</b> method <br><br>
+            <img src="../../images/laravel-one/request.png">
+          </p><br>
+          <p>
+            <span style="font-size: 26px; color: #0E8FAB">Saving Data</span><br>
+            Now that we have passed the values to the controller. Saving it to our database is a piece of cake. We'll use Eloquent. <br><br>
+            What is Eloquent? Eloquent provides a simple way to use ActiveRecord pattern when working with databases. By using this technique, we can wrap our database into objects. We may use Eloquent ORM to create, edit, manipulate, deletes our quotes without writing a single line of SQL! <br><br>
+            To save a record, we create an instance of the Quote class, set the attributes to the values gotten from the request. Modify the <b>store</b> method in the <b>QuotesController.php </b> <br>
+            <script type="text/plain" class="language-php">
+              public function store(Request $request)
+    {
+        $newQuote = new Quote;
+        $newQuote->quote = $request->quote;
+        $newQuote->author = $request->author;
+
+        $newQuote->save();
+        return redirect()->back();
+    }
+</script><br>
+          Also add to the import below just above the class declaration <br>
+          <script type="text/plain" class="language-php">
+            use App\Quote;
+</script><br>
+          That's all we need to save the record. NO need for crazy SQL! Fill the form submit. Head over to your database in phpMyAdmin and select the quotes table. You should see your data there. <br><br>
+          </p>
+          <p>
+            <span style="font-size: 26px; color: #0E8FAB">Reading Data</span><br>
+            To read the data. We simply return our view with the data from the database. <br>
+            Let us modify the <b>web.php</b> slightly so that we can use the <b>QuotesController</b> to return the welcome view. <br><br>
+            Modify the route <br>
+            <script type="text/plain" class="language-php">
+              Route::get('/', 'PagesController@home');
+</script><br>
+            Change to <br>
+            <script type="text/plain" class="language-php">
+              Route::get('/', 'QuotesController@index');
+</script><br>
+            Head over to the <b>QuotesController.php</b> and modify the <b>index</b> method. <br><br>
+            <script type="text/plain" class="language-php">
+              public function index()
+    {
+        $quotes = Quote::all();
+        return view('welcome')->with('quotes', $quotes);
+    }
+</script><br>
+We use <b>Quote::all()</b> to return all the quotes from the database. Next we return the welcome view passing the quotes to it. We need to modify our <b>welcome</b> view to see the quotes. <br><br>
+<b>welcome.blade.php</b>
+<script type="text/plain" class="language-php; line-numbers">
+  @extends('layout')
+
+@section('content')
+
+    <p>
+        <h2>List of Quotes</h2>
+        <hr> 
+  <div class="text-center">
+     @foreach ($quotes as $quote)
+        {{ $quote->quote }} <br>
+        - <i>{{ $quote->author }} </i>
+        <a href="" class="btn btn-danger"> x </a>
+        <a href="" class="btn btn-info btn-xs"> update </a>
+        <hr>
+     @endforeach
+    </div>
+    </p>
+
+@stop
+</script><br>
+We use blade to loop round the values passed to the view. The double curly braces is used to output the values. The <b>quote</b> and <b>author</b> are values we defined in the database.
+<br>
+            Save and reload the welcome page. You should see the list of quotes. <br><br>
+            <img src="../../images/laravel-one/quotes-list.png">
+          </p><br>
+          <p>
+            <span style="font-size: 26px; color: #0E8FAB">Updating Data</span><br>
+            Updating is similiar to creating data. So, create the view <b>update.blade.php</b> and add the content below. <br>
+            <script type="text/plain" class="language-markup; line-numbers">
+              @extends('layout')
+
+@section('content')
+
+    <p>
+        Update Quote
+        <form action="" method="post">
+            {{ csrf_field() }}
+            <div class="form-group">
+                <input type="text" value="{{ $quote->quote }}" name="quote" class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="text" name="author" value="{{ $quote->author }}" class="form-control">
+            </div>
+            
+            <button type="Submit" class="btn btn-primary">Submit</button>
+        </form>
+    </p>
+
+@stop
+            </script><br>
+            To see this page, modify the <b>update</b> button in the <b>welcome.blade.php</b> to hit that route. <br>
+            <script type="text/plain" class="language-markup; line-numbers">
+              <a href="{{ route('quote.update', ['id' => $quote->id]) }}" class="btn btn-info btn-xs"> update </a>
+            </script><br>
+            Notice that the id of the quote is passed to the route. This will enable us to update the quote with the <b>id</b>. Add route to <b>web.php</b> <br><br>
+            <b>web.php</b>
+            <script type="text/plain" class="language-php; line-numbers">
+              <?php
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/', 'QuotesController@index');
+Route::get('/about', 'PagesController@about');
+
+Route::get('/add-quotes', 'QuotesController@create');
+
+Route::post('/add-quotes', [
+    'uses' => 'QuotesController@store'
+]);
+
+Route::get('/quotes/update/{id}', [
+    'uses' => 'QuotesController@edit',
+    'as' => 'quote.update'
+]);
+            </script><br>
+          </p>
+          <p>
+            To return the view with the selected quote. Modify the <b>edit</b> method of the <b>QuotesController.php</b> <br><br>
+            <script type="text/plain" class="language-php; line-numbers">
+              public function edit($id)
+    {
+        $quote = Quote::find($id);
+        return view('update')->with('quote', $quote);
+    }
+          </script><br>
+          Save and reload page. Click update. That should take you to the update view with the form inputs populated with the selected quote. After making changes, what next? We have to update out database. <br><br>
+          In the <b>update.blade.php</b>, modify the action attribute of the form to point to an update route using a post request. <br><br>
+          <b>update.blade.php</b>
+          <script type="text/plain" class="language-php; line-numbers">
+              p@extends('layout')
+
+@section('content')
+
+    <p>
+        Update Quote
+        <form action="{{ route('quote.update', ['id' => $quote->id])}}" method="post">
+            {{ csrf_field() }}
+            <div class="form-group">
+                <input type="text" value="{{ $quote->quote }}" name="quote" class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="text" name="author" value="{{ $quote->author }}" class="form-control">
+            </div>
+            
+            <button type="Submit" class="btn btn-primary">Submit</button>
+        </form>
+    </p>
+
+@stop
+          </script><br>
+          Define the route in the <b>web.php</b><br>
+          <b>web.php</b>
+          <script type="text/plain" class="language-php; line-numbers">
+  <?php
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/', [
+    'uses' => 'QuotesController@index',
+    'as' => 'home'
+]);
+Route::get('/about', 'PagesController@about');
+
+Route::get('/add-quotes', 'QuotesController@create');
+
+Route::post('/add-quotes', [
+    'uses' => 'QuotesController@store'
+]);
+
+Route::get('/quotes/update/{id}', [
+    'uses' => 'QuotesController@edit',
+    'as' => 'quote.update'
+]);
+
+Route::post('/quotes/update/{id}', [
+    'uses' => 'QuotesController@update',
+    'as' => 'quote.update'
+]);
+
+
+
+</script><br>
+Notice that we are making a post request to the update method of the controller passing the id of the route we want to update. <br>NB: The first route is now named <b>home</b>. We can access this route using the name. <br><br>
+Modify the update method in <b>QuotesController.php</b> to save the changes
+<script type="text/plain" class="language-php; line-numbers">
+   public function update(Request $request, $id)
+    {
+        $quote = Quote::find($id);
+        $quote->quote = $request->quote;
+        $quote->author = $request->author;
+
+        $quote->save();
+        return redirect()->route('home');
+
+    }
+</script><br>
+          </p>
+          <p>
+            <span style="font-size: 26px; color: #0E8FAB">Deleting Data</span><br>
+            The final part of the CRUD puzzle is to delete the data from the database. <br>
+            Set up the route for the delete button. <br><br>
+            <b>welcome.blade.php</b>
+            <script type="text/plain" class="language-php; line-numbers">
+              @extends('layout')
+
+@section('content')
+
+    <p>
+        <h2>List of Quotes</h2>
+        <hr> 
+  <div class="text-center">
+     @foreach ($quotes as $quote)
+        {{ $quote->quote }} <br>
+        - <i>{{ $quote->author }} </i>
+        <a href="{{ route('quote.delete', ['id' => $quote->id]) }}" class="btn btn-danger"> x </a>
+        <a href="{{ route('quote.update', ['id' => $quote->id]) }}" class="btn btn-info btn-xs"> update </a>
+        <hr>
+     @endforeach
+    </div>
+    </p>
+
+@stop
+            </script><br>
+            
+            Add the delete route <b>web.php</b>
+            <script type="text/plain" class="language-php; line-numbers">
+              Route::get('/quote/delete/{id}', [
+    'uses' => 'QuotesController@destroy',
+    'as' => 'quote.delete'
+]);
+            </script><br>
+            Notice that we are making a call to the destroy method. Modify the method in the <b>QuotesController</b> file. <br><br>
+            <b>QuotesController.php</b>
+            <script type="text/plain" class="language-php; line-numbers">
+              public function destroy($id)
+    {
+        $quote = Quote::find($id);
+        $quote->delete();
+        
+        return redirect()->route('home');
+    }
+            </script>
+            Save and reload view. You should be able to delete any quote. Before we finish up this project, let us make it more user friendly by flashing a message to the user when an action is completed.
+          </p>
+            <div >
+            <a style="text-align: left" href="models.html"><< Models </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a style="text-align: right" href="sessions.html">Sessions >> </a>
+          </div>
+        </div>
+      </div><!-- end main content -->
+      
+      <!-- SIDEBAR -->  
+      <div class="c3">
+        <div class="rightsidebar">
+  <h2 class="title stresstitle">Subsections</h2><br>
+  <a href="views.html">Views</a><br>
+  <a href="layouts.html">Layouts</a><br>
+  <a href="models.html">Models</a><br>
+  <a href="controllers.html">Controllers</a><br>
+  <a href="sessions.html">Sessions</a><br>
+  </div> 
+      </div><!-- end sidebar -->      
+    </div>
+</div><!-- end grid -->
+
+<!-- FOOTER
+================================================== -->
+<div id="wrapfooter">
+  <div class="grid">
+    <div class="row" id="footer">
+      <!-- to top button  -->
+      <p class="back-top floatright">
+        <a href="#top"><span></span></a>
+      </p>
+      <!-- 1st column -->
+      <div class="c3">
+        <img src="images/logo.png" style="padding-top: 70px;" alt="">
+      </div>
+      <!-- 2nd column -->
+      <div class="c3">
+        <h2 class="title">Author</h2>
+        <hr class="footerstress">
+        Have you read about these frameworks and find it difficult to put all the functions together and build a project? If yes, our tutorials will help you achieve that. <br>
+        -- Mr. Kingslife
+      </div>
+      <!-- 3rd column -->
+      <div class="c3">
+        <h2 class="title"><i class="icon-envelope-alt"></i> Contact</h2>
+        <hr class="footerstress">
+        <dl>
+          <dd><span>Telephone:</span>+234 803 425 5960</dd>
+          <dd>E-mail: <a href="more.html">contact@codeject.site</a></dd>
+        </dl>
+        <ul class="social-links" style="margin-top:15px;">
+          <li class="facebook-link smallrightmargin">
+          <a href="https://fb.me/codeject" class="facebook has-tip" target="_blank" title="Join us on Facebook">Facebook</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- copyright area -->
+<div class="copyright">
+  <div class="grid">
+    <div class="row">
+      <div class="c6">
+         CodeJect &copy; 2018. All Rights Reserved.
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END CONTENT AREA -->
+<!-- JAVASCRIPTS
+================================================== -->
+<!-- all -->
+<script src="../../js/modernizr-latest.js"></script>
+
+<!-- menu & scroll to top -->
+<script src="../../js/common.js"></script>
+
+<!-- slider -->
+<script src="../../js/jquery.cslider.js"></script>
+
+<!-- cycle -->
+<script src="../../js/jquery.cycle.js"></script>
+
+<!-- carousel items -->
+<script src="../../js/jquery.carouFredSel-6.0.3-packed.js"></script>
+
+<!-- twitter -->
+<script src="../../js/jquery.tweet.js"></script>
+
+<!-- Call Showcase - change 4 from min:4 and max:4 to the number of items you want visible -->
+<script type="text/javascript">
+$(window).load(function(){			
+			$('#recent-projects').carouFredSel({
+				responsive: true,
+				width: '100%',
+				auto: true,
+				circular	: true,
+				infinite	: false,
+				prev : {
+					button		: "#car_prev",
+					key			: "left",
+						},
+				next : {
+					button		: "#car_next",
+					key			: "right",
+							},
+				swipe: {
+					onMouse: true,
+					onTouch: true
+					},
+				scroll : 2000,
+				items: {
+					visible: {
+						min: 4,
+						max: 4
+					}
+				}
+			});
+		});	
+</script>
+
+<!-- Call opacity on hover images from carousel-->
+<script type="text/javascript">
+$(document).ready(function(){
+    $("img.imgOpa").hover(function() {
+      $(this).stop().animate({opacity: "0.6"}, 'slow');
+    },
+    function() {
+      $(this).stop().animate({opacity: "1.0"}, 'slow');
+    });
+  });
+</script>
+</body>
+</html>

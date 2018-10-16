@@ -1,0 +1,722 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="viewport" content="width=device-width"/>
+<title>CodeJect</title>
+<!-- STYLES & JQUERY 
+================================================== -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/icons.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/slider.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/skinblue.css"/><!-- change skin color -->
+<link rel="stylesheet" type="text/css" href="../../css/responsive.css"/>
+<link rel="stylesheet" href="../../css/prism.css" >
+<script src="../../js/jquery-1.9.0.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</head>
+<body>
+<!-- TOP LOGO & MENU
+================================================== -->
+<div class="grid">
+	<div class="row space-bot">
+		<!--Logo-->
+		<div class="c4">
+			<a href="../../index.html">
+			<img src="../../images/logo.png" class="logo" alt="">
+			</a>
+		</div>
+		<!--Menu-->
+		<div class="c8">
+      <nav id="topNav">
+      <ul id="responsivemenu">
+        <li class="last"><a href="../../index.html">Home</a></li>
+        <li><a href="#">Tutorials</a>
+        <ul style="display: none;">
+          <li><a href="../../laravel.html">Laravel</a></li>
+          <li><a href="../../mean-stack.html">MEAN Stack</a></li>         
+          <li><a href="../../ionic.html">Ionic Framework</a></li>
+        </ul>
+        </li>    
+      </ul>
+      </nav>
+  </div>
+	</div>
+</div>
+<div class="undermenuarea">
+</div>
+<!-- START content area
+================================================== -->
+<!-- HEADER
+================================================== -->
+<div class="undermenuarea">
+  <div class="boxedshadow">
+  </div>
+  <div class="grid">
+    <div class="row">
+      <div class="c8">
+        <h1 class="titlehead">LARAVEL</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CONTENT
+================================================== -->
+<div class="grid">
+    <div class="shadowundertop">
+    </div>
+    <div class="row">   
+      
+      <!-- MAIN CONTENT -->
+      <div class="c9">
+        <h1 class="maintitle space-top">
+        <span>Books Catalogue: CRUD Operations</span>
+        </h1>
+        <div style="font-size: 18px;">
+          <p>
+            <b style="font-size: 20px; color: #0E8FAB">Reading Data</b><br>
+            The Create, Read, Update and Delete are popularly know as CRUD Operations. Actually, we have implemented the Create logic in the previous page. Let us now see how we can read the data from the database. We are going to build from the backend. <br><br>
+            Add a route to <b>routes/books.js</b> to fetch the records. The records will be returned in a <b>json</b> format<br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              const Book = require( '../models/books' );
+
+module.exports = ( router ) => {
+
+    router.post( '/add', ( req, res ) => {
+        if ( !req.body.name ) {
+            res.send( { success: false, message: 'Provide the book title' });
+        } else {
+            if ( !req.body.author ) {
+                res.send( { success: false, message: 'Provide the book author' });
+            } else {
+                if ( !req.body.year ) {
+                    res.send( { success: false, message: 'Provide Year of publication' });
+                } else {
+                    let book = new Book( {
+                        name: req.body.name,
+                        author: req.body.author,
+                        year: req.body.year
+                    });
+
+                    book.save(( err ) => {
+                        if ( err ) {
+                            res.send( { success: false, message: 'Could NOT save Book details. Error: ', err });
+                        } else {
+                            res.send( { success: true, message: 'Saved Successfully' });
+                        }
+                    });
+                }
+            }
+        }
+    });
+
+    router.get('/allBooks', (req, res) => {
+        Book.find({}, (err, books) => {
+            if(err) {
+                res.json({success: false, message: err});
+            } else {
+                if(!books){
+                    res.json({success: false, message: 'No Books in the Catalogue'});
+                } else {
+                    res.json({success: true, books: books });
+                }
+            }
+        }).sort({ '_id': -1 });
+    });
+
+    return router;
+}
+            </script><br>
+            You can test the route with Postman before building the frontend. We'll add a method on the <b>book.service.ts</b> to get the data. <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { Injectable } from '@angular/core';
+import { Http, Headers, RequestOptions } from '@angular/http';
+import 'rxjs/add/operator/map';
+
+@Injectable()
+export class BookService {
+
+  domain = "http://localhost:8080";
+
+  constructor(private http: Http) { }
+
+  addBook(book){
+    return this.http.post(this.domain + '/book/add', book).map(res => {
+      return res.json();
+    });
+  }
+
+  getAllBooks(){
+    return this.http.get(this.domain + '/book/allBooks').map(res => {
+      return res.json();
+    });
+  }
+
+}
+
+            </script><br>
+            The list of books will be displayed in the homepage. Modify the <b>home.component.ts</b> to use the get function defined in the service. <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { BookService } from './../../services/book.service';
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
+})
+export class HomeComponent implements OnInit {
+  books;
+
+  constructor(private bookService: BookService) { }
+
+  allBooks(){
+    this.bookService.getAllBooks().subscribe(data => {
+      this.books = data.books;
+    });
+  }
+
+  ngOnInit() {
+    this.allBooks(); 
+  }
+
+}
+
+            </script><br>
+            We'll use bootstrap panel to display the content. Edit <b>home.component.ts</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              <h1 class="page-header">All Books</h1>
+
+<div class="panel panel-primary" *ngFor="let book of books">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ book.name }}</h3>
+    </div>
+
+    <div class="panel-body">
+        <i> {{ book.author }}</i> in {{ book.year }}
+    </div>
+</div>
+
+            </script> <br>
+            Refresh the page. You should now see the books in the database. <br><br>
+            <img src="../../images/mean-one/read.png">
+          </p>
+
+          <p>
+            <span style="font-size: 26px; color: #0E8FAB">Update Books</span><br>
+            We'll create a page to update the books details. It is going to be similiar to the create page. The difference is that the form will be pre-populated with the values. <br><br>
+            using the command line, change directory to <b>client/src/app/components</b> folder and run <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              ng generate component edit-book
+            </script><br>
+            Add it to the routes in the <b>app-routing.module.ts</b> <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              { path: 'edit-book/:id', component: EditBookComponent }
+            </script><br>
+            Add a button to the list of books to take us to the edit route. This will pass the id of the book to the route. <br><br>
+            Modify the <b>home.component.ts</b> file to include such button <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              <h1 class="page-header">All Books</h1>
+
+<div class="panel panel-primary" *ngFor="let book of books">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ book.name }}</h3>
+    </div>
+
+    <div class="panel-body">
+        <i> {{ book.author }}</i> in {{ book.year }}
+        <a [routerLink]="['/edit-book/', book._id]" ><button type="button" class="btn btn-sm btn-info">Edit</button></a>
+    </div>
+</div>
+
+            </script><br>
+            Notice how we pass the book id to the edit-book route. Save and it automatically reloads. When you click on the edit button, it should take you to the edit-book page passing the id in the url. Now, let's work on the <b>edit-book</b> component <br><br>
+            <b>edit-book.component.html</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              <h1 class="page-header">Edit book details</h1>
+
+<div class="show-hide-message" *ngIf="message">
+  <div [ngClass]="messageClass">
+    {{ message }}
+  </div>
+</div>
+
+<form (submit)="onUpdateSubmit()">
+  <div class="form-group"> 
+    <label for="name">Book Title</label>
+    <div>
+      <input type="text" name="name" class="form-control" placeholder="Enter Book title" [(ngModel)]="book.name">
+    </div>
+  </div> 
+  <div class="form-group">
+    <label for="author">Author</label>
+    <div>
+      <input type="text" name="author" class="form-control" placeholder="Enter Book Author" [(ngModel)]="book.author">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="year">Year of Publication</label>
+    <div>
+      <input type="number" name="year" class="form-control" placeholder="Enter Year of Publication" [(ngModel)]="book.year">
+    </div>
+  </div>
+  <button type="button" class="btn btn-success" (click)="goBack()">Cancel</button>
+  <input type="submit" value="Submit" class="btn btn-primary">
+</form>
+
+            </script><br>
+            What we have above is a simple bootstrap form. The <b>[(ngModel)]</b> is used to bind the value in the input field to a value in the typescript class.<br><br>
+            <b>edit-book.component.ts</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+
+@Component({
+  selector: 'app-edit-book',
+  templateUrl: './edit-book.component.html',
+  styleUrls: ['./edit-book.component.css']
+})
+export class EditBookComponent implements OnInit {
+  message = false;
+  messageClass = false;
+
+  book = {
+    name: String,
+    author: String,
+    year: Number
+  }
+
+  constructor(private location: Location) { }
+
+  onUpdateSubmit(){
+
+  }
+
+  goBack(){
+    this.location.back();
+  }
+
+  ngOnInit() {
+  }
+
+}
+
+            </script><br>
+            This time, we'll use the Template-driven approach for our form. So add <b>FormsModule</b> to the <b>app.module.ts</b>. <br><br>
+            We'll need to go back to the backend and create the route to return the data based on the id. Add the route to <b>routes/books.js</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              router.get( '/singleBook/:id', ( req, res ) => {
+        if ( !req.params.id ) {
+            res.send( { success: false, message: 'No ID was provided' });
+        } else {
+            Book.findOne( { _id: req.params.id }, ( err, book ) => {
+                if ( err ) {
+                    res.json( { success: false, message: err });
+                } else {
+                    if ( !book ) {
+                        res.json( { success: false, message: 'No Book found with the id' });
+                    } else {
+                        res.json( { success: true, book: book });
+                    }
+                }
+            });
+        }
+    });
+            </script><br>
+            Obviously, the route will take the id of the book. find the book using the id and return a response. if the book is found, it is return in a json format. <br>
+            Let us go back to the frontend service and add a function to make a request to the route above. <br><br>
+            Add to the <b>book.service.ts</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              getSingleBook(id){
+    return this.http.get(this.domain + '/book/singleBook/' + id).map(res => {
+      return res.json();
+    });
+  }
+            </script><br>
+            We'll use this in the <b>edit-book</b> component but we also need a way to get the url so that we can snap the id from the url. That can be done with the ActivatedRoute class from the router class. <br><br>
+            Modify the <b>edit-book.component.ts</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { BookService } from './../../services/book.service';
+import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+
+@Component({
+  selector: 'app-edit-book',
+  templateUrl: './edit-book.component.html',
+  styleUrls: ['./edit-book.component.css']
+})
+export class EditBookComponent implements OnInit {
+  message = false;
+  messageClass = false;
+  currentUrl;
+
+  book = {
+    name: String,
+    author: String,
+    year: Number
+  }
+
+  constructor(private location: Location, private activatedRoute: ActivatedRoute, private bookService: BookService ) { }
+
+  onUpdateSubmit(){
+
+  }
+
+  goBack(){
+    this.location.back();
+  }
+
+  ngOnInit() {
+    this.currentUrl = this.activatedRoute.snapshot.params;
+    this.bookService.getSingleBook(this.currentUrl.id).subscribe(data => {
+      this.book = data.book;
+    });
+    console.log(this.book);
+  }
+
+}
+
+            </script><br>
+            Click on the edit button, it should take you to the <b>edit-book</b> page and populates the input fields with the book details. <br><br>
+            <img src="../../images/mean-one/edit.png"> <br><br>
+            It's time to work on the submit button so that we can submit the changes to the database. As usual, we'll start building from the backend. Add the route below to the <b>routes/books.js</b> <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              router.put('/updateBook', (req, res) => {
+        if(!req.body._id){
+            res.json({success: false, message: 'No valid id provided'});
+        } else {
+            Book.findOne({_id: req.body._id }, (err, book) => {
+                if(err){
+                    res.json({success: false, message: 'Not a valid ID'});
+                } else {
+                    if(!book){
+                        res.json({success: false, message: 'Book ID not found'});
+                    } else {
+                        book.name = req.body.name;
+                        book.author = req.body.author;
+                        book.year = req.body.year;
+
+                        book.save((err) => {
+                            if(err){
+                                res.json({success: false, message: err});
+                            } else {
+                                res.json({success: true, message: 'Book Updated'});
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    });
+
+            </script><br>
+            Next step is to add a function to the <b>book.service.ts</b> in the frontend.
+            <script type="text/plain" class="language-javascript; line-numbers">
+              updateBook(book){
+    return this.http.put(this.domain + '/book/updateBook', book).map(res => {
+      return res.json();
+    });
+  }
+            </script><br>
+            The final step is to use the function in the update function in the <b>edit-book.component.ts</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { BookService } from './../../services/book.service';
+import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+
+@Component({
+  selector: 'app-edit-book',
+  templateUrl: './edit-book.component.html',
+  styleUrls: ['./edit-book.component.css']
+})
+export class EditBookComponent implements OnInit {
+  message;
+  messageClass;
+  currentUrl;
+  book = {
+    name: String,
+    author: String,
+    year: Number
+  };
+
+  constructor(private location: Location, private activatedRoute: ActivatedRoute, private bookService: BookService, private router: Router ) { }
+
+  onUpdateSubmit(){
+    this.bookService.updateBook(this.book).subscribe(data => {
+      if(!data.success){
+        this.messageClass = 'alert alert-danger';
+        this.message = data.message;
+      } else {
+        this.messageClass = 'alert alert-success';
+        this.message = data.message;
+
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        }, 2000);
+      }
+    });
+  }
+
+  goBack(){
+    this.location.back();
+  }
+
+  ngOnInit() {
+    this.currentUrl = this.activatedRoute.snapshot.params;
+    this.bookService.getSingleBook(this.currentUrl.id).subscribe(data => {
+      this.book = data.book;
+    });
+    console.log(this.book);
+  }
+
+}
+
+            </script><br>
+            Now, you can create, read and update books in our database. <br><br>
+
+          </p>
+          <p>
+            <span style="font-size: 26px; color: #0E8FAB">Deleting Data</span><br>
+            Deleting data from the database is quite easy. As you can guess, we'll start working from the backend. Add a delete route to our <b>routes/books.js</b>
+            <script type="text/plain" class="language-javascript; line-numbers">
+               router.delete('/deleteBook/:id', (req, res) => {
+        if(!req.params.id){
+            res.json({success: false, message: 'No ID provided'});
+        } else {
+            Book.findOne({_id: req.params.id}, (err, book) => {
+                if(err){
+                    res.json({success: false, message: 'Invalid Id'});
+                } else {
+                    if(!book){
+                        res.json({success: false, message: 'No Book found with the ID'});
+                    } else {
+                        book.remove((err) => {
+                            if(err){
+                                res.json({success: false, message: err });
+                            } else {
+                                res.json({success: true, message: 'Book deleted'});
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    });
+            </script><br>
+            We have to add it to the <b>book.service.ts</b> in the frontend (angular). <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              deleteBook(id){
+    return this.http.delete(this.domain + '/book/deleteBook/' + id).map(res => {
+      return res.json();
+    });
+  }
+            </script><br>
+            Add the button to the <b>home.component.html</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              <h1 class="page-header">All Books</h1>
+
+<div class="show-hide-message" *ngIf="message">
+  <div [ngClass]="messageClass">
+    {{ message }}
+  </div>
+</div>
+
+<div class="panel panel-primary" *ngFor="let book of books">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ book.name }}</h3>
+    </div>
+
+    <div class="panel-body">
+        <i> {{ book.author }}</i> in {{ book.year }}
+        <a [routerLink]="['/edit-book/', book._id]" ><button type="button" class="btn btn-sm btn-info">Edit</button></a>
+        <button type="button" (click)="onDelete(book._id)" class="btn btn-sm btn-danger">Delete</button>
+    </div>
+</div>
+
+            </script><br>
+            Notice that we are passing in the book id. This will be passed to the delete route. notice that we have also added a div to display the message from the API. Now, add the <b>onDelete()</b> function to the class <br><br>
+            <b>home.component.ts</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { Router } from '@angular/router';
+import { BookService } from './../../services/book.service';
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
+})
+export class HomeComponent implements OnInit {
+  books;
+  message;
+  messageClass;
+
+  constructor(private bookService: BookService, private router: Router) { }
+
+  allBooks(){
+    this.bookService.getAllBooks().subscribe(data => {
+      this.books = data.books;
+    });
+  }
+
+  onDelete(id){
+    this.bookService.deleteBook(id).subscribe(data => {
+      if(!data.success){
+        this.messageClass = 'alert alert-danger';
+        this.message = data.message;
+      } else {
+        this.messageClass = 'alert alert-success';
+        this.message = data.message;
+
+        setTimeout(() => {
+          this.router.navigate(['/']);
+        }, 2000);
+      }
+    });
+  }
+
+  ngOnInit() {
+    this.allBooks(); 
+  }
+
+}
+
+            </script><br>
+            And that is it for this app guys! Hope you made it this far. Now, we have a MEAN Stack to manage books in a database.
+          </p>
+          <div >
+            <a style="text-align: left" href="forms.html"><< Forms </a>
+          </div>
+        </div>
+      </div>
+      <!-- end main content -->
+      
+      <!-- SIDEBAR -->  
+      <div class="c3">
+        <div class="rightsidebar">
+  <h2 class="title stresstitle">Subsections</h2><br>
+  <a href="views.html">Views</a><br>
+  <a href="layouts.html">Layouts</a><br>
+  <a href="models.html">Models</a><br>
+  <a href="controllers.html">Controllers</a><br>
+  <a href="crud.html">CRUD Operations</a><br>
+  </div> 
+      </div><!-- end sidebar -->      
+    </div>
+</div><!-- end grid -->
+
+<!-- FOOTER
+================================================== -->
+<div id="wrapfooter">
+  <div class="grid">
+    <div class="row" id="footer">
+      <!-- to top button  -->
+      <p class="back-top floatright">
+        <a href="#top"><span></span></a>
+      </p>
+      <!-- 1st column -->
+      <div class="c3">
+        <img src="images/logo.png" style="padding-top: 70px;" alt="">
+      </div>
+      <!-- 2nd column -->
+      <div class="c3">
+        <h2 class="title">Author</h2>
+        <hr class="footerstress">
+        Have you read about these frameworks and find it difficult to put all the functions together and build a project? If yes, our tutorials will help you achieve that. <br>
+        -- Mr. Kingslife
+      </div>
+      <!-- 3rd column -->
+      <div class="c3">
+        <h2 class="title"><i class="icon-envelope-alt"></i> Contact</h2>
+        <hr class="footerstress">
+        <dl>
+          <dd><span>Telephone:</span>+234 803 425 5960</dd>
+          <dd>E-mail: <a href="more.html">contact@codeject.site</a></dd>
+        </dl>
+        <ul class="social-links" style="margin-top:15px;">
+          <li class="facebook-link smallrightmargin">
+          <a href="https://fb.me/codeject" class="facebook has-tip" target="_blank" title="Join us on Facebook">Facebook</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- copyright area -->
+<div class="copyright">
+  <div class="grid">
+    <div class="row">
+      <div class="c6">
+         CodeJect &copy; 2018. All Rights Reserved.
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END CONTENT AREA -->
+<!-- JAVASCRIPTS
+================================================== -->
+<!-- all -->
+<script src="../../js/modernizr-latest.js"></script>
+
+<!-- menu & scroll to top -->
+<script src="../../js/common.js"></script>
+
+<!-- slider -->
+<script src="../../js/jquery.cslider.js"></script>
+
+<!-- cycle -->
+<script src="../../js/jquery.cycle.js"></script>
+
+<!-- carousel items -->
+<script src="../../js/jquery.carouFredSel-6.0.3-packed.js"></script>
+
+<!-- twitter -->
+<script src="../../js/jquery.tweet.js"></script>
+
+<!-- Call Showcase - change 4 from min:4 and max:4 to the number of items you want visible -->
+<script type="text/javascript">
+$(window).load(function(){			
+			$('#recent-projects').carouFredSel({
+				responsive: true,
+				width: '100%',
+				auto: true,
+				circular	: true,
+				infinite	: false,
+				prev : {
+					button		: "#car_prev",
+					key			: "left",
+						},
+				next : {
+					button		: "#car_next",
+					key			: "right",
+							},
+				swipe: {
+					onMouse: true,
+					onTouch: true
+					},
+				scroll : 2000,
+				items: {
+					visible: {
+						min: 4,
+						max: 4
+					}
+				}
+			});
+		});	
+</script>
+
+<!-- Call opacity on hover images from carousel-->
+<script type="text/javascript">
+$(document).ready(function(){
+    $("img.imgOpa").hover(function() {
+      $(this).stop().animate({opacity: "0.6"}, 'slow');
+    },
+    function() {
+      $(this).stop().animate({opacity: "1.0"}, 'slow');
+    });
+  });
+</script>
+</body>
+</html>

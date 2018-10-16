@@ -1,0 +1,358 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="viewport" content="width=device-width"/>
+<title>CodeJect</title>
+<!-- STYLES & JQUERY 
+================================================== -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/icons.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/slider.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/skinblue.css"/><!-- change skin color -->
+<link rel="stylesheet" type="text/css" href="../../css/responsive.css"/>
+<link rel="stylesheet" href="../../css/prism.css" >
+<script src="../../js/jquery-1.9.0.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</head>
+<body>
+<!-- TOP LOGO & MENU
+================================================== -->
+<div class="grid">
+	<div class="row space-bot">
+		<!--Logo-->
+		<div class="c4">
+			<a href="../../index.html">
+			<img src="../../images/logo.png" class="logo" alt="">
+			</a>
+		</div>
+		<!--Menu-->
+		<div class="c8">
+      <nav id="topNav">
+      <ul id="responsivemenu">
+        <li class="last"><a href="../../index.html">Home</a></li>
+        <li><a href="#">Tutorials</a>
+        <ul style="display: none;">
+          <li><a href="../../laravel.html">Laravel</a></li>
+          <li><a href="../../mean-stack.html">MEAN Stack</a></li>         
+          <li><a href="../../ionic.html">Ionic Framework</a></li>
+        </ul>
+        </li>    
+      </ul>
+      </nav>
+  </div>
+	</div>
+</div>
+<div class="undermenuarea">
+</div>
+<!-- START content area
+================================================== -->
+<!-- HEADER
+================================================== -->
+<div class="undermenuarea">
+  <div class="boxedshadow">
+  </div>
+  <div class="grid">
+    <div class="row">
+      <div class="c8">
+        <h1 class="titlehead">MEAN Stack</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CONTENT
+================================================== -->
+<div class="grid">
+    <div class="shadowundertop">
+    </div>
+    <div class="row">   
+      
+      <!-- MAIN CONTENT -->
+      <div class="c9">
+        <h1 class="maintitle space-top">
+        <span>Books Catalogue: Model</span>
+        </h1>
+        <div style="font-size: 18px;">
+          <p>
+            <b style="font-size: 20px; color: #0E8FAB">Mongodb Model</b><br>
+            Recall that we have installed mongoose. This will help us to build the models or structure for our mongodb database tables. Create a new folder in the root directory (server side) named <b>models</b><br><br>
+            Create a file <b>book.js</b> in the <b>models</b> folder and add content below<br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              const mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+
+const Schema = mongoose.Schema;
+
+const bookSchema = new Schema({
+    name: { type: String, required: true, unique: true },
+    author: { type: String, required: true },
+    year: { type: Number, required: true }
+});
+
+module.exports = mongoose.model('Book', bookSchema );
+            </script><br>
+            Create another folder called <b>routes</b> in the backend to manage our <b>API</b>s. <br>
+            Create a file <b>books.js</b> in this <b>routes</b> folder and add 
+            <script type="text/plain" class="language-javascript; line-numbers">
+              const Book = require('../models/books');
+
+module.exports = (router) => {
+
+    router.post('/add', (req,res) => {
+        res.send('Successful');
+    });
+
+    return router;
+}
+            </script><br>
+            This is where we are going to build all our routes. Notice that we have one route: A post request to the <b>add</b> url which returns successful if everything works fine. <br><br>
+            Modify the <b>index.js</b> to use this routes file. <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              const express = require('express');
+const app = express();
+const router = express.Router();
+const mongoose = require('mongoose');
+const config = require('./config/database');
+const path = require('path');
+const books = require('./routes/books')(router);
+
+mongoose.Promise = global.Promise;
+mongoose.connect(config.uri, (err) => {
+    if(err){
+        console.log('Failed to connect ', err);
+    } else {
+        console.log('Connected to ', config.db);
+    }
+});
+
+app.use(express.static(__dirname + '/client/dist/'));
+app.use('/book', books);
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/client/dist/index.html'));    
+});
+
+app.listen(8080, () => {
+    console.log('Listening on port 8080');
+});
+            </script><br>
+            We included the route file passing in the express router. Notice that we have also use a middleware on line 19 to control the request to the routes. So, all request to our books routes will have to include the <b>/book</b> uri. <br><br>To test our API, we can use a Google Extension called Postman. Run Postman, Select POST from the request type and enter the uri <b>http://localhost:8080/book/add</b>. Hit send. You should see successful in the output window. <br><br>
+            <img src="../../images/mean-one/postman.png"><br><br>
+            We'll need body-parser to translate the request from the frontend to the backend. Run the command below to install it in the server side. <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              npm install body-parser --save
+            </script><br>
+            Use it in the <b>index.js</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              const express = require('express');
+const app = express();
+const router = express.Router();
+const mongoose = require('mongoose');
+const config = require('./config/database');
+const path = require('path');
+const books = require('./routes/books')(router);
+var bodyParser = require('body-parser');
+
+mongoose.Promise = global.Promise;
+mongoose.connect(config.uri, (err) => {
+    if(err){
+        console.log('Failed to connect ', err);
+    } else {
+        console.log('Connected to ', config.db);
+    }
+});
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+ 
+// parse application/json
+app.use(bodyParser.json());
+
+app.use(express.static(__dirname + '/client/dist/'));
+app.use('/book', books);
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/client/dist/index.html'));    
+});
+
+app.listen(8080, () => {
+    console.log('Listening on port 8080');
+});
+            </script><br>
+            Let us now build our route to save to the database. Edit the <b>routes/books.js</b> file to reflect the changes below <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              const Book = require( '../models/books' );
+
+module.exports = ( router ) => {
+
+    router.post( '/add', ( req, res ) => {
+        if ( !req.body.name ) {
+            res.send( { success: false, message: 'Provide the book title' });
+        } else {
+            if ( !req.body.author ) {
+                res.send( { success: false, message: 'Provide the book author' });
+            } else {
+                if ( !req.body.year ) {
+                    res.send( { success: false, message: 'Provide Year of publication' });
+                } else {
+                    let book = new Book( {
+                        name: req.body.name,
+                        author: req.body.author,
+                        year: req.body.year
+                    });
+
+                    book.save(( err ) => {
+                        if ( err ) {
+                            res.send( { success: false, message: 'Could NOT save Book details. Error: ', err });
+                        } else {
+                            res.send( { success: true, message: 'Saved Successfully' });
+                        }
+                    });
+                }
+            }
+        }
+    });
+
+    return router;
+}
+            </script><br>
+            What we have done here is quite simple. We used the if statements to ensure that users enter the required values (name, author and year) before trying to save to the database. To save to the database, we create an instance of the Book model, pass it the values and called the save method. <br><br>
+            We can test this out this <b>API</b> with Postman. In the body section, enter the key value pairs for name, author and year. Select POST request and enter the uri <b>http://localhost:8080/book/add</b>. Also select <b>x-www-form-urlencoded</b> option and hit send. You should get a success message. <br><br>
+            <img src="../../images/mean-one/postmansave.png"> <br><br>
+            Head over to the database UI (Robomongo), you will see the user saved in the database.
+          </p>
+          <div >
+            <a style="text-align: left" href="routes.html"><< Routes </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a style="text-align: right" href="forms.html">Forms >> </a>
+          </div>
+        </div>
+      </div>
+      <!-- end main content -->
+      
+      <!-- SIDEBAR -->  
+      <div class="c3">
+        <div class="rightsidebar">
+  <h2 class="title stresstitle">Subsections</h2><br>
+  <a href="mean-installation.html">Installation</a><br>
+  <a href="routes.html">Routes</a><br>
+  <a href="models.html">Models</a><br>
+  <a href="forms.html">Reactive Forms</a><br>
+  <a href="crud.html">CRUD Operations</a><br>
+  </div> 
+      </div><!-- end sidebar -->     
+    </div>
+</div><!-- end grid -->
+
+<!-- FOOTER
+================================================== -->
+<div id="wrapfooter">
+  <div class="grid">
+    <div class="row" id="footer">
+      <!-- to top button  -->
+      <p class="back-top floatright">
+        <a href="#top"><span></span></a>
+      </p>
+      <!-- 1st column -->
+      <div class="c3">
+        <img src="images/logo.png" style="padding-top: 70px;" alt="">
+      </div>
+      <!-- 2nd column -->
+      <div class="c3">
+        <h2 class="title">Author</h2>
+        <hr class="footerstress">
+        Have you read about these frameworks and find it difficult to put all the functions together and build a project? If yes, our tutorials will help you achieve that. <br>
+        -- Mr. Kingslife
+      </div>
+      <!-- 3rd column -->
+      <div class="c3">
+        <h2 class="title"><i class="icon-envelope-alt"></i> Contact</h2>
+        <hr class="footerstress">
+        <dl>
+          <dd><span>Telephone:</span>+234 803 425 5960</dd>
+          <dd>E-mail: <a href="more.html">contact@codeject.site</a></dd>
+        </dl>
+        <ul class="social-links" style="margin-top:15px;">
+          <li class="facebook-link smallrightmargin">
+          <a href="https://fb.me/codeject" class="facebook has-tip" target="_blank" title="Join us on Facebook">Facebook</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- copyright area -->
+<div class="copyright">
+  <div class="grid">
+    <div class="row">
+      <div class="c6">
+         CodeJect &copy; 2018. All Rights Reserved.
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END CONTENT AREA -->
+<!-- JAVASCRIPTS
+================================================== -->
+<!-- all -->
+<script src="../../js/modernizr-latest.js"></script>
+
+<!-- menu & scroll to top -->
+<script src="../../js/common.js"></script>
+
+<!-- slider -->
+<script src="../../js/jquery.cslider.js"></script>
+
+<!-- cycle -->
+<script src="../../js/jquery.cycle.js"></script>
+
+<!-- carousel items -->
+<script src="../../js/jquery.carouFredSel-6.0.3-packed.js"></script>
+
+<!-- twitter -->
+<script src="../../js/jquery.tweet.js"></script>
+
+<!-- Call Showcase - change 4 from min:4 and max:4 to the number of items you want visible -->
+<script type="text/javascript">
+$(window).load(function(){			
+			$('#recent-projects').carouFredSel({
+				responsive: true,
+				width: '100%',
+				auto: true,
+				circular	: true,
+				infinite	: false,
+				prev : {
+					button		: "#car_prev",
+					key			: "left",
+						},
+				next : {
+					button		: "#car_next",
+					key			: "right",
+							},
+				swipe: {
+					onMouse: true,
+					onTouch: true
+					},
+				scroll : 2000,
+				items: {
+					visible: {
+						min: 4,
+						max: 4
+					}
+				}
+			});
+		});	
+</script>
+
+<!-- Call opacity on hover images from carousel-->
+<script type="text/javascript">
+$(document).ready(function(){
+    $("img.imgOpa").hover(function() {
+      $(this).stop().animate({opacity: "0.6"}, 'slow');
+    },
+    function() {
+      $(this).stop().animate({opacity: "1.0"}, 'slow');
+    });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="viewport" content="width=device-width"/>
+<title>Codeject</title>
+<!-- STYLES & JQUERY 
+================================================== -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/icons.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/slider.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/skinblue.css"/><!-- change skin color -->
+<link rel="stylesheet" type="text/css" href="../../css/responsive.css"/>
+<link rel="stylesheet" href="../../css/prism.css" >
+<script src="../../js/jquery-1.9.0.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</head>
+<body>
+<!-- TOP LOGO & MENU
+================================================== -->
+<div class="grid">
+	<div class="row space-bot">
+		<!--Logo-->
+		<div class="c4">
+			<a href="../../index.html">
+			<img src="../../images/logo.png" class="logo" alt="">
+			</a>
+		</div>
+		<!--Menu-->
+		<div class="c8">
+      <nav id="topNav">
+      <ul id="responsivemenu">
+        <li class="last"><a href="../../index.html">Home</a></li>
+        <li><a href="#">Tutorials</a>
+        <ul style="display: none;">
+          <li><a href="../../laravel.html">Laravel</a></li>
+          <li><a href="../../mean-stack.html">MEAN Stack</a></li>         
+          <li><a href="../../ionic.html">Ionic Framework</a></li>
+        </ul>
+        </li>    
+      </ul>
+      </nav>
+  </div>
+	</div>
+</div>
+<div class="undermenuarea">
+</div>
+<!-- START content area
+================================================== -->
+<!-- HEADER
+================================================== -->
+<div class="undermenuarea">
+  <div class="boxedshadow">
+  </div>
+  <div class="grid">
+    <div class="row">
+      <div class="c8">
+        <h1 class="titlehead">LARAVEL</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CONTENT
+================================================== -->
+<div class="grid">
+    <div class="shadowundertop">
+    </div>
+    <div class="row">   
+      
+      <!-- MAIN CONTENT -->
+      <div class="c9">
+        <h1 class="maintitle space-top">
+        <span>Favorite Quotes App: Layout</span>
+        </h1>
+        <div style="font-size: 18px;">
+          <p>
+            <span style="font-size: 26px; color: #0E8FAB">Adding Bootstrap</span><br>
+            One method is to use the CDN. This is the fatest option. You can visit <a href="getbootstrap.org/docs">Bootstrap</a> to get the latest CDN links. <br><br> Update the <b>welcome.blade.php</b> file to link to bootstrap CDN <br>
+                <script type="text/plain" class="language-markup; line-numbers">
+                  <html>
+                    <head>
+                        <title>Home Page</title>
+
+                        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+
+                        <script src="//code.jquery.com/jquery-3.1.1.min.js">&lt;/script>
+                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">&lt;/script>
+
+                    </head>
+                    <body>
+
+                    <div class="container">
+                        <div class="content">
+                            <div class="title">Home Page</div>
+                            <div class="quote">Our Home page!</div>
+                        </div>
+                    </div>
+                    </body>
+                  </html>
+                </script><br>
+                With that we have added bootstrap to our project. We can start using the styles and components. Save and reload. You should see something like this <br><br>
+                <img src="../../images/laravel-one/bootstrap.png">
+          </p><br>
+          <p>
+            <span style="font-size: 26px; color: #0E8FAB">Layout Page</span><br>
+            Imagine that we are creating a site with several pages, it would be a repetitive to copy and paste static html in all the pages. <br>
+            So, what we can do is to create a layout file which will contains html we'll need in all our pages. <br>
+            Create a file <b>layout.blade.php</b> in the <b>resources/views</b> directory and add the contents below. <br><br>
+            <b>layout.blade.php</b>
+            <script type="text/plain" class="language-markup; line-numbers">
+              <html>
+                <head>
+                    <title>Home Page</title>
+
+                    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+                    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+
+                    <script src="//code.jquery.com/jquery-3.1.1.min.js">&lt;/script>
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js">&lt;/script>
+
+                </head>
+                <body>
+
+                  @yield('content')
+
+                </body>
+              </html>
+            </script><br>
+            The <b>@yield</b> specifies where content will be injected from other pages. That is a blade syntax. <br>Blade is an official Laravel's templating engine. It's very powerful, but it has very simple syntax. We use Blade to build layouts for our Laravel applications. <br><br> Now, update the <b>welcome.blade.php</b> to use the layout <br>
+          </p>
+          <p>
+            <b>welcome.blade.php</b>
+            <pre class="line-numbers">
+              <code class="language-markup">
+                <script type="prism-html-markup">
+                  @extends('layout')
+
+                    @section('content')
+
+                      <div class="container">
+                        <div class="content">
+                          <div class="title">Home Page</div>
+                          <div class="quote">Our Home page!</div>
+                        </div>
+                      </div>
+
+                  @stop
+                </script>
+              </code>
+            </pre><br>
+            Now, our code is much cleaner. Try updating the <b>about.blade.php</b> to also use the master layout file.
+          </p>
+          <p>
+            <span style="font-size: 26px; color: #0E8FAB">Adding Bootstrap Components</span><br>
+            We are going to use a very basic bootstrap template. There are many reusable Bootstrap components built to provide navbars, labels, dropdowns, panels, etc <br><br>Modify the <b>layout.blade.php</b> file to include the following components. <br><br>
+            <script type="text/plain" class="language-markup; line-numbers">
+              <html>
+<head>
+    <title>Home Page</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="/">Quotes App</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/add-quotes">Add Quotes</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+        <h1>&nbsp;</h1>
+       @yield('content') 
+    </div><!-- /.container -->
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">&lt;/script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">&lt;/script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">&lt;/script>
+  
+</body>
+</html>
+            </script>
+          </p>
+          <p>
+            Update the <b>welcome.blade.php</b> file <br>
+            <script type="text/plain" class="language-markup; line-numbers">
+              @extends('layout')
+
+              @section('content')
+
+                  <p>
+                      <h2>List of Quotes</h2>
+                  </p>
+
+              @stop
+            </script><br>
+            That's it for layouts for now. Let us discuss <b>Models</b>
+          </p>
+          <div >
+            <a style="text-align: left" href="views.html"><< Views </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a style="text-align: right" href="models.html">Models >> </a>
+          </div>
+        </div>
+      </div><!-- end main content -->
+      
+      <!-- SIDEBAR -->  
+      <div class="c3">
+        <div class="rightsidebar">
+  <h2 class="title stresstitle">Subsections</h2><br>
+  <a href="views.html">Views</a><br>
+  <a href="layouts.html">Layouts</a><br>
+  <a href="models.html">Models</a><br>
+  <a href="controllers.html">Controllers</a><br>
+  <a href="sessions.html">Sessions</a><br>
+  </div> 
+      </div><!-- end sidebar -->      
+    </div>
+</div><!-- end grid -->
+
+<!-- FOOTER
+================================================== -->
+<div id="wrapfooter">
+  <div class="grid">
+    <div class="row" id="footer">
+      <!-- to top button  -->
+      <p class="back-top floatright">
+        <a href="#top"><span></span></a>
+      </p>
+      <!-- 1st column -->
+      <div class="c3">
+        <img src="images/logo.png" style="padding-top: 70px;" alt="">
+      </div>
+      <!-- 2nd column -->
+      <div class="c3">
+        <h2 class="title">Author</h2>
+        <hr class="footerstress">
+        Have you read about these frameworks and find it difficult to put all the functions together and build a project? If yes, our tutorials will help you achieve that. <br>
+        -- Mr. Kingslife
+      </div>
+      <!-- 3rd column -->
+      <div class="c3">
+        <h2 class="title"><i class="icon-envelope-alt"></i> Contact</h2>
+        <hr class="footerstress">
+        <dl>
+          <dd><span>Telephone:</span>+234 803 425 5960</dd>
+          <dd>E-mail: <a href="more.html">contact@codeject.site</a></dd>
+        </dl>
+        <ul class="social-links" style="margin-top:15px;">
+          <li class="facebook-link smallrightmargin">
+          <a href="https://fb.me/codeject" class="facebook has-tip" target="_blank" title="Join us on Facebook">Facebook</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- copyright area -->
+<div class="copyright">
+  <div class="grid">
+    <div class="row">
+      <div class="c6">
+         CodeJect &copy; 2018. All Rights Reserved.
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END CONTENT AREA -->
+<!-- JAVASCRIPTS
+================================================== -->
+<!-- all -->
+<script src="../../js/modernizr-latest.js"></script>
+
+<!-- menu & scroll to top -->
+<script src="../../js/common.js"></script>
+
+<!-- slider -->
+<script src="../../js/jquery.cslider.js"></script>
+
+<!-- cycle -->
+<script src="../../js/jquery.cycle.js"></script>
+
+<!-- carousel items -->
+<script src="../../js/jquery.carouFredSel-6.0.3-packed.js"></script>
+
+<!-- twitter -->
+<script src="../../js/jquery.tweet.js"></script>
+
+<!-- Call Showcase - change 4 from min:4 and max:4 to the number of items you want visible -->
+<script type="text/javascript">
+$(window).load(function(){			
+			$('#recent-projects').carouFredSel({
+				responsive: true,
+				width: '100%',
+				auto: true,
+				circular	: true,
+				infinite	: false,
+				prev : {
+					button		: "#car_prev",
+					key			: "left",
+						},
+				next : {
+					button		: "#car_next",
+					key			: "right",
+							},
+				swipe: {
+					onMouse: true,
+					onTouch: true
+					},
+				scroll : 2000,
+				items: {
+					visible: {
+						min: 4,
+						max: 4
+					}
+				}
+			});
+		});	
+</script>
+
+<!-- Call opacity on hover images from carousel-->
+<script type="text/javascript">
+$(document).ready(function(){
+    $("img.imgOpa").hover(function() {
+      $(this).stop().animate({opacity: "0.6"}, 'slow');
+    },
+    function() {
+      $(this).stop().animate({opacity: "1.0"}, 'slow');
+    });
+  });
+</script>
+</body>
+</html>

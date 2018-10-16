@@ -1,0 +1,442 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="viewport" content="width=device-width"/>
+<title>Ionic</title>
+<!-- STYLES & JQUERY 
+================================================== -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/icons.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/slider.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/skinblue.css"/><!-- change skin color -->
+<link rel="stylesheet" type="text/css" href="../../css/responsive.css"/>
+<link rel="stylesheet" href="../../css/prism.css" >
+<script src="../../js/jquery-1.9.0.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</head>
+<body>
+<!-- TOP LOGO & MENU
+================================================== -->
+<div class="grid">
+	<div class="row space-bot">
+		<!--Logo-->
+		<div class="c4">
+			<a href="../../index.html">
+			<img src="../../images/logo.png" class="logo" alt="">
+			</a>
+		</div>
+		<!--Menu-->
+		<div class="c8">
+      <nav id="topNav">
+      <ul id="responsivemenu">
+        <li class="last"><a href="../../index.html">Home</a></li>
+        <li><a href="#">Tutorials</a>
+        <ul style="display: none;">
+          <li><a href="../../laravel.html">Laravel</a></li>
+          <li><a href="../../mean-stack.html">MEAN Stack</a></li>         
+          <li><a href="../../ionic.html">Ionic Framework</a></li>
+        </ul>
+        </li>    
+      </ul>
+      </nav>
+  </div>
+	</div>
+</div>
+<div class="undermenuarea">
+</div>
+<!-- START content area
+================================================== -->
+<!-- HEADER
+================================================== -->
+<div class="undermenuarea">
+  <div class="boxedshadow">
+  </div>
+  <div class="grid">
+    <div class="row">
+      <div class="c8">
+        <h1 class="titlehead">Ionic Framework</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CONTENT
+================================================== -->
+<div class="grid">
+    <div class="shadowundertop">
+    </div>
+    <div class="row">   
+      
+      <!-- MAIN CONTENT -->
+      <div class="c9">
+        <h1 class="maintitle space-top">
+        <span>Login System with Firebase: Basics</span>
+        </h1>
+        <div style="font-size: 18px;">
+          <p>
+            <b style="font-size: 20px; color: #0E8FAB">Setting up the Form</b><br>
+            Firebase is a mobile and web application development platform by Google. It provides the backend and other infrastructure allowing you to focus on the logic of your project.
+            Hoping that you have ionic installed on your machine, run the command below <br>
+            <script type="text/plain" class="language-javascript">
+              ionic start firebase-app blank
+            </script><br>
+            This will craft a blank ionic project. If ionic is not installed on your command, Check <a href="../todo-app/basic.html">Project 1</a> for installation procedures. <br><br>
+            Next, create the pages <br>
+            signup page
+            <script type="text/plain" class="language-javascript">
+              ionic generate page signup
+            </script><br>
+            signin page
+            <script type="text/plain" class="language-javascript">
+              ionic generate page signin
+            </script><br>
+            Update the <b>src/app/app.module.ts</b> to add the pages generated. Also, since we are going to use forms, add a FormsModule<br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { SigninPageModule } from './../pages/signin/signin.module';
+import { SignupPageModule } from './../pages/signup/signup.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { ErrorHandler, NgModule } from '@angular/core';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+import { FormsModule } from '@angular/forms';
+
+import { MyApp } from './app.component';
+import { HomePage } from '../pages/home/home';
+
+@NgModule({
+  declarations: [
+    MyApp,
+    HomePage
+  ],
+  imports: [
+    BrowserModule,
+    SignupPageModule,
+    SigninPageModule,
+    FormsModule, 
+    IonicModule.forRoot(MyApp)
+  ],
+  bootstrap: [IonicApp],
+  entryComponents: [
+    MyApp,
+    HomePage
+  ],
+  providers: [
+    StatusBar,
+    SplashScreen,
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
+  ]
+})
+export class AppModule {}
+
+
+            </script><br>
+            When the user is authenticated, it will redirect to the home page. Set the sign in page as the first page to be displayed. <br><br>
+            Modify <b>app.component.ts</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { SigninPage } from './../pages/signin/signin';
+import { Component } from '@angular/core';
+import { Platform } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+
+@Component({
+  templateUrl: 'app.html'
+})
+export class MyApp {
+  rootPage:any = SigninPage;
+
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
+    platform.ready().then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
+      statusBar.styleDefault();
+      splashScreen.hide();
+    });
+  }
+}
+
+
+            </script><br>
+            We'll start by building the sigin page. We'll use the template-driven approach of building forms. <br><br>
+            Modify <b>signin.html</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              <ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <ion-list>
+      <ion-item>
+        <ion-label fixed>E-mail:</ion-label>
+        <ion-input type="email" ngModel name="email" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label fixed>Password:</ion-label>
+        <ion-input type="password" ngModel name="password" required minlength="6"></ion-input>
+      </ion-item>
+    </ion-list>
+    <button type="submit" block ion-button [disabled]="!f.valid">Login</button>
+  </form>
+</ion-content>
+
+            </script> <br>
+            In the header, we defined the color to be primary which is a variable defined in the <b>variable.scss</b> file in themes. As seen above, we created a reference to the form and pass it to the submit function. The form reference will contain all the form values. Notice we have added validations and disabled the form if the form is not valid. <br><br>
+            <b>signin.ts</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NgForm } from '@angular/forms';
+
+@IonicPage()
+@Component({
+  selector: 'page-signin',
+  templateUrl: 'signin.html',
+})
+export class SigninPage {
+
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  }
+
+  onSubmit(form: NgForm){
+    console.log(form.value);
+  }
+
+}
+
+            </script><br>
+            Fill the form and submit, you should see the values dumped to the console. Let us also work on the signup page. This will be quite similiar to the signin page. <br><br>
+            <b>singup.html</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              <ion-header color="primary">
+
+  <ion-navbar>
+    <ion-title>Create an Account</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <ion-list>
+      <ion-item>
+        <ion-label fixed>E-mail:</ion-label>
+        <ion-input type="email" ngModel name="email" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label fixed>Password:</ion-label>
+        <ion-input type="password" ngModel name="password" required minlength="6"></ion-input>
+      </ion-item>
+    </ion-list>
+    <button type="submit" block ion-button [disabled]="!f.valid">Submit</button>
+  </form>
+</ion-content>
+
+            </script><br>
+            <b>signup.ts</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { NgForm } from '@angular/forms';
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+
+@IonicPage()
+@Component({
+  selector: 'page-signup',
+  templateUrl: 'signup.html',
+})
+export class SignupPage {
+
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  }
+
+  onSubmit(form: NgForm){
+    console.log(form.value);
+  }
+
+}
+
+            </script><br>
+            It's now time we work on the backend. <br><br>
+          </p>
+          <p>
+            <span style="font-size: 26px; color: #0E8FAB">Firebase</span><br>
+            Remember, we want to use firebase . Firebase will provide us with the backend and authentication features, we'll not need to write any server side code. <br> Head over to <a href="https://firebase.google.com">firebase</a> and login. If you have a Google account, then you are ready to start using firebase. <br><br>
+            At the top right corner, click on the button <b>GO TO CONSOLE</b>. This will load the dashboard where you can create a new project. Create a new project, name it <b>firebase-login</b> (or name it whatever you want). It redirects you to project dashboard. <br><br>
+            <img src="../../images/ionic-two/firebase.png"><br><br>
+            We are concerned with authentication for now. Click on Authentication, then sign-in method and enable Email/Password authentication. <br><br>
+            We have to install the firebase SDK in our project. Run the command below to install it. <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              npm install firebase --save
+            </script><br>
+            On the project dashboard in firebase, click on <b>Web setup</b> and grab the <b>apikey</b> and <b>authdomain</b>. <br><br>
+            Next, configure it in the <b>app.component.ts</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { SigninPage } from './../pages/signin/signin';
+import { Component } from '@angular/core';
+import { Platform } from 'ionic-angular';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import firebase from 'firebase';
+
+@Component( {
+  templateUrl: 'app.html'
+} )
+export class MyApp {
+  rootPage: any = SigninPage;
+
+  constructor( platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen ) {
+    firebase.initializeApp( {
+      apiKey: "your_apikey_value",
+      authDomain: "your_authdomain_value"
+    } );
+    platform.ready().then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
+      statusBar.styleDefault();
+      splashScreen.hide();
+    } );
+  }
+}
+
+
+            </script><br>
+            With that, firebase is added to our app. Let us now work on authenticating users. 
+          </p>
+          <div style="text-align: right">
+            <a href="authentication.html">Authentication >> </a>
+          </div>
+        </div>
+      </div>
+      <!-- end main content -->
+      
+      <!-- SIDEBAR -->  
+      <div class="c3">
+        <div class="rightsidebar">
+  <h2 class="title stresstitle">Subsections</h2><br>
+  <a href="basic.html">Basics</a><br>
+  <a href="authentication.html">Authentication</a><br>
+  </div> 
+      </div><!-- end sidebar -->      
+    </div>
+</div><!-- end grid -->
+
+<!-- FOOTER
+================================================== -->
+<div id="wrapfooter">
+  <div class="grid">
+    <div class="row" id="footer">
+      <!-- to top button  -->
+      <p class="back-top floatright">
+        <a href="#top"><span></span></a>
+      </p>
+      <!-- 1st column -->
+      <div class="c3">
+        <img src="images/logo.png" style="padding-top: 70px;" alt="">
+      </div>
+      <!-- 2nd column -->
+      <div class="c3">
+        <h2 class="title">Author</h2>
+        <hr class="footerstress">
+        Have you read about these frameworks and find it difficult to put all the functions together and build a project? If yes, our tutorials will help you achieve that. <br>
+        -- Mr. Kingslife
+      </div>
+      <!-- 3rd column -->
+      <div class="c3">
+        <h2 class="title"><i class="icon-envelope-alt"></i> Contact</h2>
+        <hr class="footerstress">
+        <dl>
+          <dd><span>Telephone:</span>+234 803 425 5960</dd>
+          <dd>E-mail: <a href="more.html">contact@codeject.site</a></dd>
+        </dl>
+        <ul class="social-links" style="margin-top:15px;">
+          <li class="facebook-link smallrightmargin">
+          <a href="https://fb.me/codeject" class="facebook has-tip" target="_blank" title="Join us on Facebook">Facebook</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- copyright area -->
+<div class="copyright">
+  <div class="grid">
+    <div class="row">
+      <div class="c6">
+         CodeJect &copy; 2018. All Rights Reserved.
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END CONTENT AREA -->
+<!-- JAVASCRIPTS
+================================================== -->
+<!-- all -->
+<script src="../../js/modernizr-latest.js"></script>
+
+<!-- menu & scroll to top -->
+<script src="../../js/common.js"></script>
+
+<!-- slider -->
+<script src="../../js/jquery.cslider.js"></script>
+
+<!-- cycle -->
+<script src="../../js/jquery.cycle.js"></script>
+
+<!-- carousel items -->
+<script src="../../js/jquery.carouFredSel-6.0.3-packed.js"></script>
+
+<!-- twitter -->
+<script src="../../js/jquery.tweet.js"></script>
+
+<!-- Call Showcase - change 4 from min:4 and max:4 to the number of items you want visible -->
+<script type="text/javascript">
+$(window).load(function(){			
+			$('#recent-projects').carouFredSel({
+				responsive: true,
+				width: '100%',
+				auto: true,
+				circular	: true,
+				infinite	: false,
+				prev : {
+					button		: "#car_prev",
+					key			: "left",
+						},
+				next : {
+					button		: "#car_next",
+					key			: "right",
+							},
+				swipe: {
+					onMouse: true,
+					onTouch: true
+					},
+				scroll : 2000,
+				items: {
+					visible: {
+						min: 4,
+						max: 4
+					}
+				}
+			});
+		});	
+</script>
+
+<!-- Call opacity on hover images from carousel-->
+<script type="text/javascript">
+$(document).ready(function(){
+    $("img.imgOpa").hover(function() {
+      $(this).stop().animate({opacity: "0.6"}, 'slow');
+    },
+    function() {
+      $(this).stop().animate({opacity: "1.0"}, 'slow');
+    });
+  });
+</script>
+</body>
+</html>

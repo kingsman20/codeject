@@ -1,0 +1,578 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="viewport" content="width=device-width"/>
+<title>CodeJect</title>
+<!-- STYLES & JQUERY 
+================================================== -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/icons.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/slider.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/skinblue.css"/><!-- change skin color -->
+<link rel="stylesheet" type="text/css" href="../../css/responsive.css"/>
+<link rel="stylesheet" href="../../css/prism.css" >
+<script src="../../js/jquery-1.9.0.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</head>
+<body>
+<!-- TOP LOGO & MENU
+================================================== -->
+<div class="grid">
+	<div class="row space-bot">
+		<!--Logo-->
+		<div class="c4">
+			<a href="../../index.html">
+			<img src="../../images/logo.png" class="logo" alt="">
+			</a>
+		</div>
+		<!--Menu-->
+		<div class="c8">
+      <nav id="topNav">
+      <ul id="responsivemenu">
+        <li class="last"><a href="../../index.html">Home</a></li>
+        <li><a href="#">Tutorials</a>
+        <ul style="display: none;">
+          <li><a href="../../laravel.html">Laravel</a></li>
+          <li><a href="../../mean-stack.html">MEAN Stack</a></li>         
+          <li><a href="../../ionic.html">Ionic Framework</a></li>
+        </ul>
+        </li>    
+      </ul>
+      </nav>
+  </div>
+	</div>
+</div>
+<div class="undermenuarea">
+</div>
+<!-- START content area
+================================================== -->
+<!-- HEADER
+================================================== -->
+<div class="undermenuarea">
+  <div class="boxedshadow">
+  </div>
+  <div class="grid">
+    <div class="row">
+      <div class="c8">
+        <h1 class="titlehead">MEAN Stack</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CONTENT
+================================================== -->
+<div class="grid">
+    <div class="shadowundertop">
+    </div>
+    <div class="row">   
+      
+      <!-- MAIN CONTENT -->
+      <div class="c9">
+        <h1 class="maintitle space-top">
+        <span>Books Catalogue: Reactive Forms</span>
+        </h1>
+        <div style="font-size: 18px;">
+          <p>
+            <b style="font-size: 20px; color: #0E8FAB">Angular Forms</b><br>
+            It's time we go back to the frontend and build a form that will connect to the backend. There are two approaches in building forms in angular. The Template Driven Approach and Reactive Approach. The Reactive approach gives us more control over the form. We are using the Reactive Approach in this tutorial. <br><br>
+            Add to the <b>add-books.component.html</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              <h1 class="page-header">Add Book to Catalogue</h1>
+
+<form [formGroup]="form" (submit)="onSubmit()">
+  <div class="form-group">
+    <label for="name">Book Title</label>
+    <div>
+      <input type="text" name="name" class="form-control" placeholder="Enter Book title" formControlName="name">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="author">Author</label>
+    <div>
+      <input type="text" name="author" class="form-control" placeholder="Enter Book Author" formControlName="author">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="year">Year of Publication</label>
+    <div>
+      <input type="number" name="year" class="form-control" placeholder="Enter Year of Publication" formControlName="year">
+    </div>
+  </div>
+  <input type="submit" value="Submit" class="btn btn-primary">
+</form>
+
+
+            </script><br>
+            This is just a simple bootstrap form. Notice that we have given a name to the form and form elements so that we can use it in the code. Let's go ahead and build the form in our code. <br><br>
+            Since we are using the reactive approach. Remove the FormModule and replace it with the ReactiveFormsModule class in the <b>app.module.ts</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { AppRoutingModule } from './app-routing.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AppComponent } from './app.component';
+import { HomeComponent } from './components/home/home.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { AddBooksComponent } from './components/add-books/add-books.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    NavbarComponent,
+    AddBooksComponent
+  ],
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule,
+    AppRoutingModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+            </script><br>
+            Remember that we are calling the <b>onSubmit()</b> function when we submit the form. We can log the value to the console to see what we have in the form class. <br><br>
+            Modify <b>add-books.component.ts</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-add-books',
+  templateUrl: './add-books.component.html',
+  styleUrls: ['./add-books.component.css']
+})
+export class AddBooksComponent implements OnInit {
+
+  form: FormGroup;
+
+  constructor(private formBuilder: FormBuilder ) {
+    this.createForm();
+  }
+
+  createForm(){
+    this.form = this.formBuilder.group({
+      name: '',
+      author: '',
+      year: ''
+    });
+  }
+
+  onSubmit(){
+    console.log(this.form);
+  }
+
+  ngOnInit() {
+  }
+
+}
+
+            </script><br>
+            Fill the form and submit. You should see the FormGroup properties in the console. <br><br>
+            <p>
+              <span style="font-size: 26px; color: #0E8FAB">Validation</span><br>
+              We'll add some validation to our forms. Modify the <b>add-books.component.html</b> to add the validation logic. <br>
+              <script type="text/plain" class="language-javascript; line-numbers">
+              <h1 class="page-header">Add Book to Catalogue</h1>
+
+<form [formGroup]="form" (submit)="onSubmit()">
+  <div class="form-group">
+    <label for="name">Book Title</label>
+    <div [ngClass]="{'has-error': (form.controls.name.errors && form.controls.name.dirty), 'has-success': !form.controls.name.errors}">
+      <input type="text" name="name" class="form-control" placeholder="Enter Book title" formControlName="name">
+      <ul>
+        <li *ngIf="form.controls.name.errors?.required && form.controls.name.dirty">The book title is required</li>
+      </ul>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="author">Author</label>
+    <div [ngClass]="{'has-error': (form.controls.author.errors && form.controls.author.dirty), 'has-success': !form.controls.author.errors}">
+      <input type="text" name="author" class="form-control" placeholder="Enter Book Author" formControlName="author">
+      <ul>
+        <li *ngIf="form.controls.author.errors?.required && form.controls.author.dirty">The book Author is required</li>
+      </ul>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="year">Year of Publication</label>
+    <div [ngClass]="{'has-error': (form.controls.year.errors && form.controls.year.dirty), 'has-success': !form.controls.year.errors}">
+      <input type="number" name="year" class="form-control" placeholder="Enter Year of Publication" formControlName="year">
+      <ul>
+        <li *ngIf="form.controls.year.errors?.required && form.controls.year.dirty">Year of Publication is required</li>
+      </ul>
+    </div>
+  </div>
+  <input [disabled]="!form.valid" type="submit" value="Submit" class="btn btn-primary">
+</form>
+
+            </script><br>
+            What we have done is to us angular to add a class if the form has errors. Notice that we have also disabled the form until the user fills the required fields. <br><br>
+            Edit the <b>add-books.component.ts</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-add-books',
+  templateUrl: './add-books.component.html',
+  styleUrls: ['./add-books.component.css']
+})
+export class AddBooksComponent implements OnInit {
+
+  form: FormGroup;
+
+  constructor(private formBuilder: FormBuilder ) {
+    this.createForm();
+  }
+
+  createForm(){
+    this.form = this.formBuilder.group({
+      name: ['', Validators.required],
+      author: ['', Validators.required],
+      year: ['', Validators.required]
+    });
+  }
+
+  onSubmit(){
+    console.log(this.form);
+  }
+
+  ngOnInit() {
+  }
+
+}
+
+            </script> <br>
+            We have used the Validators class to use add a required validation.
+              
+            </p><br>
+            <p>
+              <span style="font-size: 26px; color: #0E8FAB">Angular Http</span><br>
+              To send our data to the backend, we can use the angular Http Module. Create a folder in the <b>client/src/app</b> directory called <b>services</b>. Using the command line, navigate to the newly created services folder and run the coomand below to create a service. <br><br>
+              <script type="text/plain" class="language-javascript; line-numbers">
+              ng generate service book
+            </script><br>
+            Although the service is created using the command line, it is not automatically updated in the <b>app.module.ts</b>. <br><br>
+            Modify <b>app.module.ts</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { BookService } from './services/book.service';
+import { AppRoutingModule } from './app-routing.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AppComponent } from './app.component';
+import { HomeComponent } from './components/home/home.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { AddBooksComponent } from './components/add-books/add-books.component';
+import { HttpModule } from '@angular/http';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    NavbarComponent,
+    AddBooksComponent
+  ],
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule,
+    HttpModule,
+    AppRoutingModule
+  ],
+  providers: [BookService],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+            </script><br>
+            We'll use the Http Class to connect to the backend. Add to the <b>book.service.ts</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { Injectable } from '@angular/core';
+import { Http, Headers, RequestOptions } from '@angular/http';
+import 'rxjs/add/operator/map';
+
+@Injectable()
+export class BookService {
+
+  domain = "http://localhost:8080";
+
+  constructor(private http: Http) { }
+
+  addBook(book){
+    return this.http.post(this.domain + '/book/add', book).map(res => {
+      return res.json();
+    });
+  }
+
+}
+
+            </script><br>
+            Notice that we have a function to make a call to the server on port 8080. we also pass in the book object which will have the book title, author and year of publication. <br><br>
+            Go back to the <b>add-books.component.ts</b> and use the service. <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              import { BookService } from './../../services/book.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-add-books',
+  templateUrl: './add-books.component.html',
+  styleUrls: ['./add-books.component.css']
+})
+export class AddBooksComponent implements OnInit {
+
+  form: FormGroup;
+
+  constructor(private formBuilder: FormBuilder, private bookService: BookService ) {
+    this.createForm();
+  }
+
+  createForm(){
+    this.form = this.formBuilder.group({
+      name: ['', Validators.required],
+      author: ['', Validators.required],
+      year: ['', Validators.required]
+    });
+  }
+
+  onSubmit(){
+    const book = {
+      name: this.form.get('name').value,
+      author: this.form.get('author').value,
+      year: this.form.get('year').value
+    }
+
+    this.bookService.addBook(book).subscribe(data => {
+      console.log(data);
+    })
+  }
+
+  ngOnInit() {
+  }
+
+}
+
+            </script><br>
+            On the <b>onSubmit</b> function, we have constructed the book object and pass it to the addBook function in the bookService class. Making a request from our development server (frontend) to our backend is considered a Cross Origin Requests(Cors). To enable us make such request, we need to install cors. Run the command in the root directory (backend) <br><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              npm install cors --save
+            </script><br>
+            Configure it in the <b>index.js</b> file by specifying the server to allow cors. <br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              const express = require('express');
+const app = express();
+const router = express.Router();
+const mongoose = require('mongoose');
+const config = require('./config/database');
+const path = require('path');
+const books = require('./routes/books')(router);
+var bodyParser = require('body-parser');
+const cors = require('cors');
+
+mongoose.Promise = global.Promise;
+mongoose.connect(config.uri, (err) => {
+    if(err){
+        console.log('Failed to connect ', err);
+    } else {
+        console.log('Connected to ', config.db);
+    }
+});
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+ 
+// parse application/json
+app.use(bodyParser.json());
+
+app.use(cors({
+    origin: 'http://localhost:4200'
+}));
+
+app.use(express.static(__dirname + '/client/dist/'));
+app.use('/book', books);
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/client/dist/index.html'));    
+});
+
+app.listen(8080, () => {
+    console.log('Listening on port 8080');
+});
+            </script><br>
+            When you fill the form and submit, the values is added to the database and we get the responds in the console. <br><br>
+            <img src="../../images/mean-one/response.png"><br><br>      
+            </p>
+            <p>
+              <span style="font-size: 26px; color: #0E8FAB">Showing Errors</span><br>
+              We'll use a div tag to display the errors to the user. Add to the <b>add-books.component.html</b> above the form tag. <br><br>
+              <script type="text/plain" class="language-javascript; line-numbers">
+              <div class="show-hide-message">
+  <div [ngClass]="messageClass">
+    {{ message }}
+  </div>
+</div>
+            </script><br>
+            The <b>messageClass</b> and <b>message</b> will be defined in the typescript file. The <b>messageClass</b> will allow us to dynamically add a bootstrap error or success class to the tag while the <b>message</b> will be gotten from the response. <br><br>
+            Add message and messageClass properties above the constructor and modify the <b>onSubmit()</b> function in the <b>add-books.component.ts</b>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              onSubmit(){
+    const book = {
+      name: this.form.get('name').value,
+      author: this.form.get('author').value,
+      year: this.form.get('year').value
+    }
+
+    this.bookService.addBook(book).subscribe(data => {
+      if(!data.success){
+        this.messageClass = 'alert alert-danger';
+        this.message = data.message;
+      } else {
+        this.messageClass = 'alert alert-success';
+        this.message = data.message;
+      }
+    });
+  }
+            </script><br>
+            Fill the form and submit, you should see the div displayed with a success message.
+            </p>
+
+          </p>
+          <div >
+            <a style="text-align: left" href="models.html"><< Models </a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a style="text-align: right" href="crud.html">CRUD Operations >> </a>
+          </div>
+        </div>
+      </div>
+      <!-- end main content -->
+      
+      <!-- SIDEBAR -->  
+      <div class="c3">
+        <div class="rightsidebar">
+  <h2 class="title stresstitle">Subsections</h2><br>
+  <a href="mean-installation.html">Installation</a><br>
+  <a href="routes.html">Routes</a><br>
+  <a href="models.html">Models</a><br>
+  <a href="forms.html">Reactive Forms</a><br>
+  <a href="crud.html">CRUD Operations</a><br>
+  </div> 
+      </div><!-- end sidebar -->       
+    </div>
+</div><!-- end grid -->
+
+<!-- FOOTER
+================================================== -->
+<div id="wrapfooter">
+  <div class="grid">
+    <div class="row" id="footer">
+      <!-- to top button  -->
+      <p class="back-top floatright">
+        <a href="#top"><span></span></a>
+      </p>
+      <!-- 1st column -->
+      <div class="c3">
+        <img src="images/logo.png" style="padding-top: 70px;" alt="">
+      </div>
+      <!-- 2nd column -->
+      <div class="c3">
+        <h2 class="title">Author</h2>
+        <hr class="footerstress">
+        Have you read about these frameworks and find it difficult to put all the functions together and build a project? If yes, our tutorials will help you achieve that. <br>
+        -- Mr. Kingslife
+      </div>
+      <!-- 3rd column -->
+      <div class="c3">
+        <h2 class="title"><i class="icon-envelope-alt"></i> Contact</h2>
+        <hr class="footerstress">
+        <dl>
+          <dd><span>Telephone:</span>+234 803 425 5960</dd>
+          <dd>E-mail: <a href="more.html">contact@codeject.site</a></dd>
+        </dl>
+        <ul class="social-links" style="margin-top:15px;">
+          <li class="facebook-link smallrightmargin">
+          <a href="https://fb.me/codeject" class="facebook has-tip" target="_blank" title="Join us on Facebook">Facebook</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- copyright area -->
+<div class="copyright">
+  <div class="grid">
+    <div class="row">
+      <div class="c6">
+         CodeJect &copy; 2018. All Rights Reserved.
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END CONTENT AREA -->
+<!-- JAVASCRIPTS
+================================================== -->
+<!-- all -->
+<script src="../../js/modernizr-latest.js"></script>
+
+<!-- menu & scroll to top -->
+<script src="../../js/common.js"></script>
+
+<!-- slider -->
+<script src="../../js/jquery.cslider.js"></script>
+
+<!-- cycle -->
+<script src="../../js/jquery.cycle.js"></script>
+
+<!-- carousel items -->
+<script src="../../js/jquery.carouFredSel-6.0.3-packed.js"></script>
+
+<!-- twitter -->
+<script src="../../js/jquery.tweet.js"></script>
+
+<!-- Call Showcase - change 4 from min:4 and max:4 to the number of items you want visible -->
+<script type="text/javascript">
+$(window).load(function(){			
+			$('#recent-projects').carouFredSel({
+				responsive: true,
+				width: '100%',
+				auto: true,
+				circular	: true,
+				infinite	: false,
+				prev : {
+					button		: "#car_prev",
+					key			: "left",
+						},
+				next : {
+					button		: "#car_next",
+					key			: "right",
+							},
+				swipe: {
+					onMouse: true,
+					onTouch: true
+					},
+				scroll : 2000,
+				items: {
+					visible: {
+						min: 4,
+						max: 4
+					}
+				}
+			});
+		});	
+</script>
+
+<!-- Call opacity on hover images from carousel-->
+<script type="text/javascript">
+$(document).ready(function(){
+    $("img.imgOpa").hover(function() {
+      $(this).stop().animate({opacity: "0.6"}, 'slow');
+    },
+    function() {
+      $(this).stop().animate({opacity: "1.0"}, 'slow');
+    });
+  });
+</script>
+</body>
+</html>

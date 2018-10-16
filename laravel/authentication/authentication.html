@@ -1,0 +1,288 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="viewport" content="width=device-width"/>
+<title>Codeject</title>
+<!-- STYLES & JQUERY 
+================================================== -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/icons.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/slider.css"/>
+<link rel="stylesheet" type="text/css" href="../../css/skinblue.css"/><!-- change skin color -->
+<link rel="stylesheet" type="text/css" href="../../css/responsive.css"/>
+<link rel="stylesheet" href="../../css/prism.css" >
+<script src="../../js/jquery-1.9.0.min.js"></script>
+<script src="../../js/prism.js"></script>
+
+</head>
+<body>
+<!-- TOP LOGO & MENU
+================================================== -->
+<div class="grid">
+	<div class="row space-bot">
+		<!--Logo-->
+		<div class="c4">
+			<a href="../../index.html">
+			<img src="../../images/logo.png" class="logo" alt="">
+			</a>
+		</div>
+		<!--Menu-->
+		<div class="c8">
+      <nav id="topNav">
+      <ul id="responsivemenu">
+        <li class="last"><a href="../../index.html">Home</a></li>
+        <li><a href="#">Tutorials</a>
+        <ul style="display: none;">
+          <li><a href="../../laravel.html">Laravel</a></li>
+          <li><a href="../../mean-stack.html">MEAN Stack</a></li>         
+          <li><a href="../../ionic.html">Ionic Framework</a></li>
+        </ul>
+        </li>    
+      </ul>
+      </nav>
+  </div>
+	</div>
+</div>
+<div class="undermenuarea">
+</div>
+<!-- START content area
+================================================== -->
+<!-- HEADER
+================================================== -->
+<div class="undermenuarea">
+  <div class="boxedshadow">
+  </div>
+  <div class="grid">
+    <div class="row">
+      <div class="c8">
+        <h1 class="titlehead">LARAVEL</h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CONTENT
+================================================== -->
+<div class="grid">
+    <div class="shadowundertop">
+    </div>
+    <div class="row">   
+      
+      <!-- MAIN CONTENT -->
+      <div class="c9">
+        <h1 class="maintitle space-top">
+        <span>Basic Authentication System</span>
+        </h1>
+        <div style="font-size: 18px;">
+          <p>
+            <b style="font-size: 20px; color: #0E8FAB">Installing Laravel</b><br>
+            Besides using XAMPP for installing laravel as seen in Project 1, we can use a very nice tool called laragon. Laragon can be used to craft a new laravel project. <br><br>
+            First, install latest version of nodejs on your machine. Then, head over to <a href="https://laragon.org">Laragon Page</a>, download and install the latest version of laragon. <br><br>
+            Start the server. Click on the Menu, Quick Create and then laravel as shown below <br><br>
+            <img src="../../images/laravel-two/laragon.png">. <br><br>
+            Enter Project name (let's say <b>basic-authentication</b>) and click on Ok. This will open up a terminal and download laravel project. Note the directory where it installs the project and open project in any text editor (Sublime, VS Code, Atom). <br><br>
+            Laragon also generates a pretty url for us which can be seen from the terminal. Head over to the and enter the generated url. You should see laravel welcome page. <br><br>
+            <img src="../../images/laravel-two/welcome.png">
+          </p>
+          <p>
+            <span style="font-size: 26px; color: #0E8FAB">Authentication Command</span><br>
+            Laravel has an easy way of working with authentication. In fact, we can scaffold an authentication system using the artisan command tool built into laravel.  <br><br>
+            First, let us set up the connection to the database. Laragon ships with a portable database system. In Laragon, click on database button and connect to the port. You'll notice that laravel had automatically created a database for our project (named <b>basic-authentication</b> in this case). How Cool Is That! <br><br>
+            To connect to the database, we need to edit the <b>.env</b> file in the root of our project folder <br>
+            <script type="text/plain" class="language-javascript">
+              DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=basic-authentication
+DB_USERNAME=root
+DB_PASSWORD=
+            </script><br>
+            Laravel project comes with a User Model and a create user migration by default. To craft the authentication. Open a terminal, change directory to the project folder and run <br>
+            <script type="text/plain" class="language-javascript">
+              php artisan make:auth
+            </script><br>
+            Refresh the browser. You should now see a Login and Register links at the top. <br><br>
+            <img src="../../images/laravel-two/auth.png"><br><br>
+            Click on the links. You will notice that it also generates the pages for login and register. Another thing the auth command did for us was to generate routes for us. <br>
+            Remember that routes manages the view to be displayed. <br><br>
+            Run the command below to see list of routes generated. <br>
+            <script type="text/plain" class="language-javascript">
+              php artisan route:list
+            </script><br>
+            <img src="../../images/laravel-two/routes.png"><br><br>
+            As we can see from the terminal, when we make a GET request to the login route, it hits the <b>showLoginForm</b> function in the <b>LoginController</b>. This function returns the view we see when we click on the login button. <br><br>
+            The login page can be found in the <b>reources/views</b> directory. Same with the register. <br>
+            We'll need a table for our users obviously. We can create tables using Migrations. There is a User migration file already created for us. Modify it as shown below<br><br>
+            <b>database/migrations/timestamp_create_users_table.php</b><br>
+            <script type="text/plain" class="language-javascript; line-numbers">
+              <?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateUsersTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('users', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->rememberToken();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('users');
+    }
+}
+
+            </script><br>
+            As seen in the <b>up</b> function, the Schema class will create a user table with the associated columns. All we need to do is to run the command <br>
+            <script type="text/plain" class="language-javascript">
+              php artisan migrate
+            </script><br>
+            This creates the table in the database. That's it Guys! You can now Register or Login. If successful, you'll be redirected to the home page found in the <b>resources/views</b> directory. 
+            <br><br>
+            <img src="../../images/laravel-two/home.png">
+          </p>
+        </div>
+      </div>
+      <!-- end main content -->
+      
+      <!-- SIDEBAR -->  
+      <div class="c3">
+        <div class="rightsidebar">
+  <h2 class="title stresstitle">Subsections</h2><br>
+  <a href="authentication.html">Authentication</a><br>
+  </div> 
+      </div><!-- end sidebar -->      
+    </div>
+</div><!-- end grid -->
+
+<!-- FOOTER
+================================================== -->
+<div id="wrapfooter">
+  <div class="grid">
+    <div class="row" id="footer">
+      <!-- to top button  -->
+      <p class="back-top floatright">
+        <a href="#top"><span></span></a>
+      </p>
+      <!-- 1st column -->
+      <div class="c3">
+        <img src="images/logo.png" style="padding-top: 70px;" alt="">
+      </div>
+      <!-- 2nd column -->
+      <div class="c3">
+        <h2 class="title">Author</h2>
+        <hr class="footerstress">
+        Have you read about these frameworks and find it difficult to put all the functions together and build a project? If yes, our tutorials will help you achieve that. <br>
+        -- Mr. Kingslife
+      </div>
+      <!-- 3rd column -->
+      <div class="c3">
+        <h2 class="title"><i class="icon-envelope-alt"></i> Contact</h2>
+        <hr class="footerstress">
+        <dl>
+          <dd><span>Telephone:</span>+234 803 425 5960</dd>
+          <dd>E-mail: <a href="more.html">contact@codeject.site</a></dd>
+        </dl>
+        <ul class="social-links" style="margin-top:15px;">
+          <li class="facebook-link smallrightmargin">
+          <a href="https://fb.me/codeject" class="facebook has-tip" target="_blank" title="Join us on Facebook">Facebook</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- copyright area -->
+<div class="copyright">
+  <div class="grid">
+    <div class="row">
+      <div class="c6">
+         CodeJect &copy; 2018. All Rights Reserved.
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END CONTENT AREA -->
+<!-- JAVASCRIPTS
+================================================== -->
+<!-- all -->
+<script src="../../js/modernizr-latest.js"></script>
+
+<!-- menu & scroll to top -->
+<script src="../../js/common.js"></script>
+
+<!-- slider -->
+<script src="../../js/jquery.cslider.js"></script>
+
+<!-- cycle -->
+<script src="../../js/jquery.cycle.js"></script>
+
+<!-- carousel items -->
+<script src="../../js/jquery.carouFredSel-6.0.3-packed.js"></script>
+
+<!-- twitter -->
+<script src="../../js/jquery.tweet.js"></script>
+
+<!-- Call Showcase - change 4 from min:4 and max:4 to the number of items you want visible -->
+<script type="text/javascript">
+$(window).load(function(){			
+			$('#recent-projects').carouFredSel({
+				responsive: true,
+				width: '100%',
+				auto: true,
+				circular	: true,
+				infinite	: false,
+				prev : {
+					button		: "#car_prev",
+					key			: "left",
+						},
+				next : {
+					button		: "#car_next",
+					key			: "right",
+							},
+				swipe: {
+					onMouse: true,
+					onTouch: true
+					},
+				scroll : 2000,
+				items: {
+					visible: {
+						min: 4,
+						max: 4
+					}
+				}
+			});
+		});	
+</script>
+
+<!-- Call opacity on hover images from carousel-->
+<script type="text/javascript">
+$(document).ready(function(){
+    $("img.imgOpa").hover(function() {
+      $(this).stop().animate({opacity: "0.6"}, 'slow');
+    },
+    function() {
+      $(this).stop().animate({opacity: "1.0"}, 'slow');
+    });
+  });
+</script>
+</body>
+</html>
